@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <!-- сейчас веб-сервис называется так. временное название. -->
+    <title>Desman translate</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="S. Zimenkova, E. Smirnov, PetrSU">
+    <!-- подключение css bootstrap. -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <!-- подключение js bootstrap. -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    
+
+    <!-- шапка, повторяется на всех страницах. -->
+    <header class="py-3 border-bottom">
+        <div class="container d-flex flex-wrap justify-content-center">
+            <a class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">
+                <img width="250" height="100" src="./style/images/logo.png" alt="logo">
+            </a>
+            <div class="d-flex align-items-center">
+                <form role="search">
+                    <input type="search" class="form-control" placeholder="Поиск..." aria-label="Search">
+                </form>
+            </div>
+        </div>
+    </header>
+    <nav class="py-2 bg-body-tertiary border-bottom">
+        <div class="container d-flex flex-wrap">
+            <ul class="nav me-auto">
+                <li class="nav-item"><a href="index.html" class="nav-link link-body-emphasis px-2 active" aria-current="page">Главная</a></li>
+                <li class="nav-item"><a href="projects.html" class="nav-link link-body-emphasis px-2">Проекты</a></li>
+                <li class="nav-item"><a href="public.html" class="nav-link link-body-emphasis px-2">Поиск проектов</a></li>
+            </ul>
+            <ul class="nav" style="display: flex;">
+                <!--li class="nav-item"><a href="login.html" class="nav-link link-body-emphasis px-2">Войти</a></li>
+                <li class="nav-item"><a href="signup.html" class="nav-link link-body-emphasis px-2">Зарегистрироваться</a></li-->
+                <li class="nav-item"><a href="user.html" class="nav-link px-2" style="text-decoration: underline;">LazyDesman</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <!-- страница проекта. -->
+
+    <div class="container" style="margin-top: 50px;">
+        <h1 style="margin-top: 20px; margin-bottom: 20px;">Название проекта</h1>
+        <!-- вкладочки -->
+        <nav>
+            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-project-tab" data-bs-toggle="tab" data-bs-target="#nav-project" type="button" role="tab" aria-controls="nav-project" aria-selected="true">Проект</button>
+            <button class="nav-link" id="nav-members-tab" data-bs-toggle="tab" data-bs-target="#nav-members" type="button" role="tab" aria-controls="nav-members" aria-selected="false">Участники</button>
+            <button class="nav-link" id="nav-settings-tab" data-bs-toggle="tab" data-bs-target="#nav-settings" type="button" role="tab" aria-controls="nav-settings" aria-selected="false">Настройки</button>
+            </div>
+        </nav>
+
+
+        <div class="tab-content" id="nav-tabContent">
+
+            <!-- основная страница. -->
+
+            <div class="tab-pane fade show active" id="nav-project" role="tabpanel" aria-labelledby="nav-project-tab">
+                <div class="row">
+                    <div class="col-7">
+                        <img src="./style/images/placeholder.png" height="250" alt="project cover" style="float: left; padding: 10px; margin: 10px 10px 0px 0px" class="border rounded">
+                        <h3>Описание проекта</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    </div>
+                    <div class="col border-top border-start rounded py-3" style="margin-top: 5px; margin-left: 0px; margin-right: 20px; padding-left: 20px;">
+                        <h3 class="py-2 border-bottom" style="margin-top: -10px">Информация</h3>
+                        <div class="py-2 border-bottom" style="margin-top: -8px"><a><b>Перевод:</b> с английского на русский</a></div>
+                        <div class="py-2 border-bottom"><a><b>Дата создания:</b> 01.01.2023</a></div>
+                        <div class="py-2 border-bottom"><a><b>Статус:</b> открыт</a></div>
+                        <div class="py-2 border-bottom"><a><b>Прогресс:</b>
+                            <div class="progress-stacked" style="margin: 10px 0px 5px 0px;">
+                                <div class="progress" role="progressbar" aria-label="Переведено" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar">15%</div>
+                                </div>
+                                <div class="progress" role="progressbar" aria-label="Переводится" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success">40%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="py-2 border-bottom"><a><b>Ваша роль:</b> владелец</a></div>
+                        <h3 class="py-2 border-bottom" style="margin-top: 5px">Модераторы</h3>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                <th scope="col">Ник</th>
+                                <th scope="col">Роль</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-light">
+                                <th scope="row">LazyDesman</th>
+                                <td>Владелец</td>
+                                </tr>
+                                <tr class="table-light">
+                                    <th scope="row">Ipaingo</th>
+                                    <td>Модератор</td>
+                                </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                </div>
+                <h2>Разделы</h2>
+                <button type="button" class="btn btn-primary" style="margin-top: 0px; margin-bottom: 5px;" onclick="location.href = 'addchapters.html';">Добавить раздел</button>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">№</th>
+                            <th scope="col">Название</th>
+                            <th scope="col">Прогресс</th>
+                            <th scope="col">Скачать</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td><a href="editor.html">Раздел 1.</a></td>
+                            <td>50 / 100 (50%)</td>
+                            <td>Оригинал / Переведено</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td><a href="editor.html">Раздел 2.</a></td>
+                            <td>1 / 100 (1%)</td>
+                            <td>Оригинал / Переведено</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td><a href="editor.html">Раздел 3.</a></td>
+                            <td>0 / 100 (0%)</td>
+                            <td>Оригинал / Переведено</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- участники. -->
+
+            <div class="tab-pane fade" id="nav-members" role="tabpanel" aria-labelledby="nav-members-tab">
+                <div class="row">
+                    <div class="col-8">
+                        <h2>Участники перевода</h2>
+                        <table class="table table-striped align-items-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">№</th>
+                                    <th scope="col">Ник</th>
+                                    <th scope="col">Роль</th>
+                                    <th scope="col">Рейтинг</th>
+                                    <th scope="col" style="display: inline-flexbox">Модерация</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>LazyDesman</td>
+                                    <td>Владелец</td>
+                                    <td>30</td>
+                                    <td style="display: inline-flexbox"><button type="button" class="btn btn-outline-danger" style="padding: 0px 5px;">Исключить</button></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Ipaingo</td>
+                                    <td><select class="form-select" id="members-role-2" style="padding: 0px 5px; width: 80%;" disabled>
+                                        <option value="member">Переводчик</option>
+                                        <option value="redactor">Редактор</option>
+                                        <option value="moderator" selected>Модератор</option>
+                                    </select></td>
+                                    <td>0</td>
+                                    <td style="display: inline-flexbox"><button type="button" class="btn btn-outline-danger" style="padding: 0px 5px;">Исключить</button></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Neprim</td>
+                                    <td><select class="form-select" id="members-role-3" style="padding: 0px 5px; width: 80%;">
+                                        <option value="member" selected>Переводчик</option>
+                                        <option value="redactor">Редактор</option>
+                                        <option value="moderator">Модератор</option>
+                                    </select></td>
+                                    <td>21</td>
+                                    <td style="display: inline-flexbox"><button type="button" class="btn btn-outline-danger" style="padding: 0px 5px;">Исключить</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col border-top border-start rounded py-3" style="margin-top: 5px; margin-left: 0px; margin-right: 20px; padding-left: 20px;">
+                        <h3 class="py-2 border-bottom" style="margin-top: -5px">Пригласить участника</h3>
+                        <form role="invite" style="margin-top: 10px">
+                            <input class="form-control" placeholder="Введите ник пользователя" aria-label="Invite">
+                        </form>
+                        <button type="button" class="btn btn-primary" style="margin-top: 10px; margin-bottom: 5px;">Пригласить</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- настройки. -->
+
+            <div class="tab-pane fade" id="nav-settings" role="tabpanel" aria-labelledby="nav-settings-tab">
+                <h2 style="margin-top: 20px; margin-bottom: 20px;">Настройки проекта</h2>
+                <div class="row">
+                    <div class="border rounded py-3" style="padding: 0px 20px; margin: 0px 20px;">
+                        <form class="row">
+                            <label for="settings-id" class="form-label">Уникальная ссылка</label>
+                            <div class="col-3">
+                                <input type="text" class="form-control is-valid" id="settings-id" minlength="4", maxlength="100">
+                                <!--div class="valid-feedback">Можно использовать!</div>
+                                <div class="invalid-feedback">Такая ссылка уже занята!</div-->
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" type="submit">Применить</button>
+                            </div>
+                        </form>
+                        <form>
+                            <label for="settings-name" class="form-label" style="margin-top: 10px">Название проекта</label>
+                            <input type="text" class="form-control" id="settings-name" value="Нынешнее название" minlength="4" maxlength="100">
+
+                            <label for="settings-description" class="form-label" style="margin-top: 10px;">Описание проекта</label>
+                            <textarea class="form-control" aria-label="With textarea" id="settings-description" maxlength="1000">Нынешнее описание</textarea>
+
+                            <label for="settings-logo" class="form-label" style="margin-top: 10px;">Сменить обложку</label>
+                            <input type="file" class="form-control" id="settings-logo" accept="image/png, image/jpeg" aria-describedby="logo-desc">
+                            <div id="logo-desc" class="form-text">Принимаются картинки в формате png и jpeg.</div>
+
+                            <label for="settings-author" class="form-label" style="margin-top: 10px;">Владелец проекта</label>
+                            <input type="text" class="form-control" id="settings-author" value="Нынешний владелец">
+
+                            <label for="settings-src-lang" class="form-label" style="margin-top: 10px;">Язык оригинала</label>
+                            <select class="form-select" id="settings-src-lang">
+                                <option value="ru" selected>русский</option>
+                                <option value="en">английский</option>
+                                <option value="de">немецкий</option>
+                                <option value="fr">французский</option>
+                            </select>
+
+                            <label for="settings-category" class="form-label" style="margin-top: 10px;">Язык перевода</label>
+                            <select class="form-select" id="settings-category">
+                                <option value="ru">русский</option>
+                                <option value="en" selected>английский</option>
+                                <option value="de">немецкий</option>
+                                <option value="fr">французский</option>
+                            </select>
+
+                            <label for="settings-access" class="form-label" style="margin-top: 10px;">Язык перевода</label>
+                            <div class="form-check">
+                                <input type="radio" name="radios" class="form-check-input" id="settings-access-private" value="private" checked>
+                                <label class="form-check-label" for="settings-access-private">Приватный проект</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" name="radios" class="form-check-input" id="settings-access-public" value="public">
+                                <label class="form-check-label" for="settings-access-public">Публичный проект</label>
+                            </div>
+
+                            <label for="settings-category" class="form-label" style="margin-top: 10px;">Категория</label>
+                            <select class="form-select" id="settings-category" aria-describedby="category-desc">
+                                <option value="none" selected>Не выбрано</option>
+                                <option value="movie">Фильмы</option>
+                                <option value="text">Тексты</option>
+                                <option value="program">Программы</option>
+                            </select>
+                            <div id="category-desc" class="form-text">* Если вы выбрали категорию, и ваш проект публичный,
+                                он будет отображаться в соответствующей категории во вкладке "Публичные переводы".
+                                Приватные проекты не будут отображаться в этой вкладке вне зависимости от категории.
+                            </div>
+
+                            <label for="settings-status" class="form-label" style="margin-top: 10px;">Статус</label>
+                            <div class="form-check">
+                                <input type="radio" name="radios" class="form-check-input" id="settings-status-opened" value="opened" checked>
+                                <label class="form-check-label" for="settings-status-opened">Проект открыт</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" name="radios" class="form-check-input" id="settings-status-frozen" value="frozen">
+                                <label class="form-check-label" for="settings-status-frozen">Проект заморожен</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" name="radios" class="form-check-input" id="settings-status-closed" value="closed">
+                                <label class="form-check-label" for="settings-status-closed">Проект закрыт</label>
+                            </div>
+                            <div id="status-desc" class="form-text">* Статус проекта отображается на странице проекта. Вы можете пометить проект как замороженный, чтобы обозначить,
+                                что временно не будете над ним работать, или как закрытый, если работа завершена и не будет продолжаться.
+                            </div>
+
+                            <button class="btn btn-primary" type="submit" style="margin-top: 20px;">Применить</button>
+                        </form>    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- футер внизу страницы, также повторяется на всех страницах. -->
+    <nav class="py-2 bg-body-tertiary border-top" style="margin-top: 20px;">
+        <div class="container d-flex flex-wrap">
+            <ul class="nav me-auto">
+                <li class="nav-item"><a href="mailto:szimenkova7@gmail.com" class="nav-link link-dark px-2">Поддержка</a></li>
+            </ul>
+            <ul class="nav align-items-center">
+                <li><a class="px-2" href="https://cs.petrsu.ru/">© ПетрГУ 2023</a></li>
+            </ul>
+        </div>
+    </nav>
+</body>
+</html>
