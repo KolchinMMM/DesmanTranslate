@@ -1,10 +1,33 @@
-import { Link } from "react-router-dom";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
-import placeholder from "../images/placeholder.png";
+import { Link } from "react-router-dom"
+import Navbar from "./Navbar"
+import Footer from "./Footer"
+import placeholder from "../images/placeholder.png"
+import React, { useEffect, useState } from "react"
+
+import api_link from "../App"
+
 
 function Home() {
-  return (
+
+  	const [users, setUsers] = useState([])
+
+	const fetchUserData = () => {
+	fetch(api_link+"api/projects")
+		.then(response => {
+		return response.json()
+		})
+		.then(data => {
+		setUsers(data)
+		})
+	}
+
+	useEffect(() => {
+		fetchUserData()
+	  }, [])
+
+	console.log(users)
+
+  	return (
     <>
       <Navbar />
       <div className="container" style={{ marginTop: 50 }}>

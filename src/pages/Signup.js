@@ -1,7 +1,53 @@
-import { Link } from "react-router-dom";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
-function Signup(){
+import { Link } from "react-router-dom"
+import Navbar from "./Navbar"
+import Footer from "./Footer"
+import api_link from "../App"
+
+import React, { setState, useEffect, useState, formData } from "react"
+import { useId } from 'react'
+import axios from "axios"
+
+export default function Signup(){
+
+    const [inputMail, setInputMail] = useState("");
+    const [inputLogin, setInputLogin] = useState("");
+    const [inputPass, setInputPass] = useState("");
+    const [inputRepeatPass, setInputRepeatPass] = useState("");
+
+    const [users, setUsers] = useState([])
+
+
+	const fetchUserData = () => {
+        const vals = {
+            "username": inputLogin,
+            "email": inputMail,
+            "password": inputPass
+        }
+        axios.post(api_link+"register", vals)
+            .then(response => {
+            return response.json()
+            })
+            .then(data => {
+            setUsers(data)
+            })
+	}
+
+    function Submit(event) {
+        console.log(inputMail+inputLogin+inputPass+inputRepeatPass)
+        event.preventDefault()
+        fetchUserData()
+    }
+
+    const mailChange = event => setInputMail(event.target.value);
+    const loginChange = event => setInputLogin(event.target.value);
+    const passChange = event => setInputPass(event.target.value);
+    const repeatPassChange = event => setInputRepeatPass(event.target.value);
+    
+
+	
+
+	console.log(users)
+
     return (
         <>
             <Navbar/>
@@ -21,7 +67,7 @@ function Signup(){
                     <label htmlFor="inputEmail" className="form-label">
                         Электронная почта
                     </label>
-                    <input type="email" className="form-control" id="inputEmail" />
+                    <input type="email" value={inputMail} className="form-control" id="inputEmail" onChange={mailChange} />
                     </div>
                     <div className="mb-3">
                     <label htmlFor="inputLogin" className="form-label">
@@ -30,6 +76,8 @@ function Signup(){
                     <input
                         type="text"
                         className="form-control"
+                        value={inputLogin}
+                        onChange={loginChange}
                         id="inputLogin"
                         aria-describedby="loginDesc"
                     />
@@ -41,15 +89,15 @@ function Signup(){
                     <label htmlFor="inputPassword" className="form-label">
                         Пароль
                     </label>
-                    <input type="password" className="form-control" id="inputPassword" />
+                    <input type="password" value={inputPass} onChange={passChange} className="form-control" id="inputPassword" />
                     </div>
                     <div className="mb-3">
                     <label htmlFor="repeatPassword" className="form-label">
                         Повторите пароль
                     </label>
-                    <input type="password" className="form-control" id="repeatPassword" />
+                    <input type="password" value={inputRepeatPass} onChange={repeatPassChange} className="form-control" id="repeatPassword" />
                     </div>
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="btn btn-primary" onClick={Submit}>
                     Зарегистрироваться
                     </button>
                 </form>
@@ -58,5 +106,3 @@ function Signup(){
         </>
     );
 }
-
-export default Signup;
