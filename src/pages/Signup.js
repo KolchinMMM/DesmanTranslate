@@ -23,12 +23,9 @@ export default function Signup(){
             "email": inputMail,
             "password": inputPass
         }
-        axios.post(api_link+"register", vals)
+        axios.post(api_link+"/register", vals)
             .then(response => {
             return response.json()
-            })
-            .then(data => {
-            setUsers(data)
             })
 	}
 
