@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import placeholder from "../images/placeholder.png";
 
 function Projects(){
     return (
@@ -67,7 +68,7 @@ function Projects(){
                                 <img
                                 width={60}
                                 height={60}
-                                src="./style/images/placeholder.png"
+                                src={placeholder}
                                 alt="thumbnail"
                                 style={{ marginRight: 10 }}
                                 />
@@ -92,7 +93,7 @@ function Projects(){
                                 <img
                                 width={60}
                                 height={60}
-                                src="./style/images/placeholder.png"
+                                src={placeholder}
                                 alt="thumbnail"
                                 style={{ marginRight: 10 }}
                                 />
@@ -117,7 +118,7 @@ function Projects(){
                                 <img
                                 width={60}
                                 height={60}
-                                src="./style/images/placeholder.png"
+                                src={placeholder}
                                 alt="thumbnail"
                                 style={{ marginRight: 10 }}
                                 />
@@ -146,7 +147,7 @@ function Projects(){
                                 <img
                                 width={60}
                                 height={60}
-                                src="./style/images/placeholder.png"
+                                src={placeholder}
                                 alt="thumbnail"
                                 style={{ marginRight: 10 }}
                                 />
@@ -171,7 +172,7 @@ function Projects(){
                                 <img
                                 width={60}
                                 height={60}
-                                src="./style/images/placeholder.png"
+                                src={placeholder}
                                 alt="thumbnail"
                                 style={{ marginRight: 10 }}
                                 />
@@ -196,7 +197,7 @@ function Projects(){
                                 <img
                                 width={60}
                                 height={60}
-                                src="./style/images/placeholder.png"
+                                src={placeholder}
                                 alt="thumbnail"
                                 style={{ marginRight: 10 }}
                                 />
@@ -235,7 +236,7 @@ function Projects(){
                                 <img
                                 width={60}
                                 height={60}
-                                src="./style/images/placeholder.png"
+                                src={placeholder}
                                 alt="thumbnail"
                                 style={{ marginRight: 10 }}
                                 />
@@ -295,7 +296,7 @@ function Projects(){
                                 <img
                                 width={60}
                                 height={60}
-                                src="./style/images/placeholder.png"
+                                src={placeholder}
                                 alt="thumbnail"
                                 style={{ marginRight: 10 }}
                                 />

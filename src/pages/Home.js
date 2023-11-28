@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import placeholder from "../images/placeholder.png";
 
 function Home() {
   return (
@@ -8,50 +9,56 @@ function Home() {
       <Navbar />
       <div className="container" style={{ marginTop: 50 }}>
         <div className="row">
-          <div className="col-6" style={{ paddingRight: "5%" }}>
-            <h2 className="text-start">Недавние проекты:</h2>
+          <div className="col-6 text-left" style={{ paddingRight: "5%" }}>
+            <h2>Недавние проекты:</h2>
             <div
-              className="container border-bottom"
+              className="container text-left border-bottom"
               style={{ paddingBottom: 25 }}
             >
               <div
-                className="row border rounded py-3"
+                className="row border rounded py-3 align-items-center"
                 style={{ marginTop: 5 }}
               >
                 <div className="col-2">
                   <img
                     width={60}
                     height={60}
-                    src=".\src\images\placeholder.png"
-                    alt="thumbnail"
-                    style={{ marginRight: 10 }}
-                  />
-                </div>
-                <div className="col">
-                  <b>
-                    <a className="text-primary text-start" href="project_id.html">
-                      Название проекта
-                    </a>
-                  </b>
-                  <br /> Полезная информация
-                </div>
-              </div>
-              <div
-                className="row border rounded py-3"
-                style={{ marginTop: 5 }}
-              >
-                <div className="col-2">
-                  <img
-                    width={60}
-                    height={60}
-                    src="./src/images/placeholder.png"
+                    src={placeholder}
                     alt="thumbnail"
                     style={{ marginRight: 10 }}
                   />
                 </div>
                 <div className="col text-left">
+                  <a>
+                    <b />
+                  </a>
                   <b>
-                    <a className="text-primary" href="project_id.html">
+                    <a className="link-primary" href="project_id.html">
+                      Название проекта
+                    </a>
+                  </b>{" "}
+                  <br /> Полезная информация
+                </div>
+              </div>
+              <div
+                className="row border rounded py-3 align-items-center"
+                style={{ marginTop: 5 }}
+              >
+                <div className="col-2">
+                  <img
+                    width={60}
+                    height={60}
+                    src={placeholder}
+                    alt="thumbnail"
+                    style={{ marginRight: 10 }}
+                  />
+                </div>
+                <div className="col text-left">
+                  <a>
+                    <b />
+                  </a>
+                  <b>
+                    <a className="link-primary" href="project_id.html">
                       Название проекта
                     </a>
                   </b>{" "}
@@ -69,7 +76,7 @@ function Home() {
                   <img
                     width={60}
                     height={60}
-                    src="./src/images/placeholder.png"
+                    src={placeholder}
                     alt="thumbnail"
                     style={{ marginRight: 10 }}
                   />
@@ -79,7 +86,7 @@ function Home() {
                     <b />
                   </a>
                   <b>
-                    <a className="text-primary" href="project_id.html">
+                    <a className="link-primary" href="project_id.html">
                       Название проекта
                     </a>
                   </b>{" "}
@@ -94,7 +101,7 @@ function Home() {
                   <img
                     width={60}
                     height={60}
-                    src="./src/images/placeholder.png"
+                    src={placeholder}
                     alt="thumbnail"
                     style={{ marginRight: 10 }}
                   />
@@ -104,7 +111,7 @@ function Home() {
                     <b />
                   </a>
                   <b>
-                    <a className="text-primary" href="project_id.html">
+                    <a className="link-primary" href="project_id.html">
                       Название проекта
                     </a>
                   </b>{" "}
@@ -119,7 +126,7 @@ function Home() {
                   <img
                     width={60}
                     height={60}
-                    src="./src/images/placeholder.png"
+                    src={placeholder}
                     alt="thumbnail"
                     style={{ marginRight: 10 }}
                   />
@@ -129,7 +136,7 @@ function Home() {
                     <b />
                   </a>
                   <b>
-                    <a className="text-primary" href="project_id.html">
+                    <a className="link-primary" href="project_id.html">
                       Название проекта
                     </a>
                   </b>{" "}
