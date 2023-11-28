@@ -8,54 +8,48 @@ function Home() {
       <Navbar />
       <div className="container" style={{ marginTop: 50 }}>
         <div className="row">
-          <div className="col-6 text-left" style={{ paddingRight: "5%" }}>
-            <h2>Недавние проекты:</h2>
+          <div className="col-6" style={{ paddingRight: "5%" }}>
+            <h2 className="text-start">Недавние проекты:</h2>
             <div
-              className="container text-left border-bottom"
+              className="container border-bottom"
               style={{ paddingBottom: 25 }}
             >
               <div
-                className="row border rounded py-3 align-items-center"
+                className="row border rounded py-3"
                 style={{ marginTop: 5 }}
               >
                 <div className="col-2">
                   <img
                     width={60}
                     height={60}
-                    src="./style/images/placeholder.png"
+                    src=".\src\images\placeholder.png"
                     alt="thumbnail"
                     style={{ marginRight: 10 }}
                   />
                 </div>
-                <div className="col text-left">
-                  <a>
-                    <b />
-                  </a>
+                <div className="col">
                   <b>
-                    <a className="text-primary" href="project_id.html">
+                    <a className="text-primary text-start" href="project_id.html">
                       Название проекта
                     </a>
-                  </b>{" "}
+                  </b>
                   <br /> Полезная информация
                 </div>
               </div>
               <div
-                className="row border rounded py-3 align-items-center"
+                className="row border rounded py-3"
                 style={{ marginTop: 5 }}
               >
                 <div className="col-2">
                   <img
                     width={60}
                     height={60}
-                    src="./style/images/placeholder.png"
+                    src="./src/images/placeholder.png"
                     alt="thumbnail"
                     style={{ marginRight: 10 }}
                   />
                 </div>
                 <div className="col text-left">
-                  <a>
-                    <b />
-                  </a>
                   <b>
                     <a className="text-primary" href="project_id.html">
                       Название проекта
@@ -75,7 +69,7 @@ function Home() {
                   <img
                     width={60}
                     height={60}
-                    src="./style/images/placeholder.png"
+                    src="./src/images/placeholder.png"
                     alt="thumbnail"
                     style={{ marginRight: 10 }}
                   />
@@ -100,7 +94,7 @@ function Home() {
                   <img
                     width={60}
                     height={60}
-                    src="./style/images/placeholder.png"
+                    src="./src/images/placeholder.png"
                     alt="thumbnail"
                     style={{ marginRight: 10 }}
                   />
@@ -125,7 +119,7 @@ function Home() {
                   <img
                     width={60}
                     height={60}
-                    src="./style/images/placeholder.png"
+                    src="./src/images/placeholder.png"
                     alt="thumbnail"
                     style={{ marginRight: 10 }}
                   />
