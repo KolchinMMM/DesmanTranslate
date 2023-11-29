@@ -19,13 +19,16 @@ export default function Signup(){
 
 	const fetchUserData = () => {
         const vals = {
-            "username": inputLogin,
-            "email": inputMail,
-            "password": inputPass
+            "username": "jopaaa",
+            "email": "maaaail@gmail.com",
+            "password": "oooooblyaaa"
         }
-        axios.post(api_link+"/register", vals)
+        axios.post("https://127.0.0.1:3000/register", vals)
             .then(response => {
             return response.json()
+            })
+            .then(data => {
+            setUsers(data)
             })
 	}
 
@@ -39,9 +42,6 @@ export default function Signup(){
     const loginChange = event => setInputLogin(event.target.value);
     const passChange = event => setInputPass(event.target.value);
     const repeatPassChange = event => setInputRepeatPass(event.target.value);
-    
-
-	
 
 	console.log(users)
 

@@ -8,7 +8,7 @@ import User from "./pages/User.js";
 import Login from "./pages/Login.js";
 import Signup from "./pages/Signup.js";
 
-const api_link = "127.0.0.1"
+const api_link = "127.0.0.1:3000"
 
 function App() {
   return (
