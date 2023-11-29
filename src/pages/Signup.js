@@ -4,8 +4,7 @@ import Footer from "./Footer"
 import api_link from "../App"
 
 import React, { setState, useEffect, useState, formData } from "react"
-import { useId } from 'react'
-import axios from "axios"
+
 
 export default function Signup(){
 
@@ -16,27 +15,46 @@ export default function Signup(){
 
     const [users, setUsers] = useState([])
 
+	// const fetchUserData = () => {
+    //     const vals = {
+    //         "username": "jopaaa",
+    //         "email": "maaaail@gmail.com",
+    //         "password": "oooooblyaaa"
+    //     }
 
-	const fetchUserData = () => {
-        const vals = {
-            "username": "jopaaa",
-            "email": "maaaail@gmail.com",
-            "password": "oooooblyaaa"
-        }
-        axios.post("https://127.0.0.1:3000/register", vals)
-            .then(response => {
-            return response.json()
-            })
-            .then(data => {
-            setUsers(data)
-            })
-	}
 
-    function Submit(event) {
+    //     fetch("http://127.0.0.1:3000/api/projects",
+    //         {
+    //             method: "get",
+    //             data: vals
+    //         })
+    //     // axios.post("http://127.0.0.1:3000/api/register", vals)
+    //     //     .then(response => {
+    //     //     return response.json()
+    //     //     })
+    //     //     .then(data => {
+    //     //     setUsers(data)
+    //     //     })
+	// }
+
+    async function Submit(event) {
         console.log(inputMail+inputLogin+inputPass+inputRepeatPass)
         event.preventDefault()
-        fetchUserData()
+        const jopa = await fetch("http://127.0.0.1:3000/api/register",
+        {
+            method:"POST",
+            body: JSON.stringify({
+                "username": "jopaaa",
+                "email": "maaaail@gmail.com",
+                "password": "oooooblyaaa"
+             }),
+             headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+            },
+        }).then((response) => response.json())
+        console.log(jopa)
     }
+    
 
     const mailChange = event => setInputMail(event.target.value);
     const loginChange = event => setInputLogin(event.target.value);
