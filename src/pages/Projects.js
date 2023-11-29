@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 import placeholder from "../images/placeholder.png";
 
 function Projects(){
@@ -9,41 +11,12 @@ function Projects(){
             <Navbar/>
             <div className="container" style={{ marginTop: 50 }}>
                 {/* вкладочки */}
-                <nav>
-                    <div className="nav nav-tabs mb-3" id="nav-tab" role="tablist">
-                    <button
-                        className="nav-link active"
-                        id="nav-my-projects-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#nav-my-projects"
-                        type="button"
-                        role="tab"
-                        aria-controls="nav-my-projects"
-                        aria-selected="true"
-                    >
-                        Мои проекты
-                    </button>
-                    <button
-                        className="nav-link"
-                        id="nav-invitations-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#nav-invitations"
-                        type="button"
-                        role="tab"
-                        aria-controls="nav-invitations"
-                        aria-selected="false"
-                    >
-                        Приглашения
-                    </button>
-                    </div>
-                </nav>
-                <div className="tab-content" id="nav-tabContent">
-                    <div
-                    className="tab-pane fade show active"
-                    id="nav-my-projects"
-                    role="tabpanel"
-                    aria-labelledby="nav-my-projects-tab"
-                    >
+                <Tabs
+                defaultActiveKey="my-projects"
+                id="uncontrolled-tab-example"
+                className="mb-3"
+                >
+                <Tab eventKey="my-projects" title="Мои проекты">
                     <div className="row">
                         <div className="col-6">
                         <h2 style={{ marginBottom: 20 }}>Мои проекты</h2>
@@ -217,13 +190,8 @@ function Projects(){
                         </div>
                         </div>
                     </div>
-                    </div>
-                    <div
-                    className="tab-pane fade"
-                    id="nav-invitations"
-                    role="tabpanel"
-                    aria-labelledby="nav-invitations-tab"
-                    >
+                    </Tab>
+                    <Tab eventKey="invitations" title="Приглашения">
                     <h2 style={{ marginBottom: 20 }}>Приглашения</h2>
                     <div className="row">
                         <div className="col-6">
@@ -347,8 +315,8 @@ function Projects(){
                         </div>
                         </div>
                     </div>
-                    </div>
-                </div>
+                    </Tab>
+                </Tabs>
                 </div>
                 <Footer/>
         </>
