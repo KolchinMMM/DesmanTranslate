@@ -32,7 +32,7 @@ function Home() {
 
   let navigate = useNavigate(); 
   const routeChange = () =>{ 
-    let path = `/project`; 
+    let path = '/project'; 
     navigate(path);
   }
 
