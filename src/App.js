@@ -9,6 +9,7 @@ import Login from "./pages/Login.js";
 import Signup from "./pages/Signup.js";
 import Project from './pages/Project.js';
 import Create from './pages/Create.js';
+import Editor from './pages/Editor.js';
 
 const api_link = "127.0.0.1:3000"
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="signup" element={ <Signup/> } />
         <Route path="project/:id" element={ <Project/> } />
         <Route path="create" element={ <Create/> } />
+        <Route path="editor" element={ <Editor/> } />
       </Routes>
     </div>
   )
