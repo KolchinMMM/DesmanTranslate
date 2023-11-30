@@ -13,7 +13,7 @@ function Projects(){
                 {/* вкладочки */}
                 <Tabs
                 defaultActiveKey="my-projects"
-                id="uncontrolled-tab-example"
+                id="projects-tabs"
                 className="mb-3"
                 >
                 <Tab eventKey="my-projects" title="Мои проекты">

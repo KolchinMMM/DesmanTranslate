@@ -55,9 +55,9 @@ function Home() {
                     <b />
                   </a>
                   <b>
-                    <a className="link-primary" href="project_id.html">
-                      Название проекта
-                    </a>
+                    <Link to="/project" className="link-primary">
+                        Название проекта
+                    </Link>
                   </b>{" "}
                   <br /> Полезная информация
                 </div>
@@ -80,9 +80,9 @@ function Home() {
                     <b />
                   </a>
                   <b>
-                    <a className="link-primary" href="project_id.html">
-                      Название проекта
-                    </a>
+                    <Link to="/project" className="link-primary">
+                        Название проекта
+                    </Link>
                   </b>{" "}
                   <br /> Полезная информация
                 </div>
@@ -108,9 +108,9 @@ function Home() {
                     <b />
                   </a>
                   <b>
-                    <a className="link-primary" href="project_id.html">
-                      Название проекта
-                    </a>
+                    <Link to="/project" className="link-primary">
+                        Название проекта
+                    </Link>
                   </b>{" "}
                   <br /> Владелец проекта
                 </div>
@@ -133,9 +133,9 @@ function Home() {
                     <b />
                   </a>
                   <b>
-                    <a className="link-primary" href="project_id.html">
-                      Название проекта
-                    </a>
+                    <Link to="/project" className="link-primary">
+                        Название проекта
+                    </Link>
                   </b>{" "}
                   <br /> Владелец проекта
                 </div>
@@ -158,9 +158,9 @@ function Home() {
                     <b />
                   </a>
                   <b>
-                    <a className="link-primary" href="project_id.html">
-                      Название проекта
-                    </a>
+                    <Link to="/project" className="link-primary">
+                        Название проекта
+                    </Link>
                   </b>{" "}
                   <br /> Владелец проекта
                 </div>
@@ -183,7 +183,7 @@ function Home() {
               Как это работает?
             </h5>
             <p>
-              Когда вы загружаете текст для работы, он нарзбивается на небольшие
+              Когда вы загружаете текст для работы, он разбивается на небольшие
               отрывки: строки, абзацы, отдельные субтитры — вы можете выбрать способ
               самостоятельно. Каждый пользователь может предложить свой вариант
               перевода для отрывка, а лучший вариант определяется голосованием.
