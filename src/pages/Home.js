@@ -7,28 +7,63 @@ import Button from "react-bootstrap/Button"
 import { useNavigate } from "react-router-dom"
 
 import api_link from "../App"
-
+const user = JSON.parse(localStorage.getItem("user"))
 
 function Fill_projects(){
-  let jopa = fetch("http://127.0.0.1:3000/api/projects",
+  let jsx = []
+  fetch("http://127.0.0.1:3000/api/projects",
     {
         method:"GET",
         credentials:"include",  
-    }).then((response) => response.json())
+    })
+    .then((response) => response.json())
+    
     .then((data) => {
+
+      var user_projects = new Array()
+
       data.forEach(elem =>{
-        console.log(elem)
+        if (elem.owner_id === user.id)
+          user_projects.push(elem)
+      })
+
+      user_projects.sort(function(a, b) {
+        return a.created_at < b.created_at;
+      });
+
+      let count = 0
+
+      user_projects.forEach(elem => {
+        if (count != 2){
+            console.log(elem.name)
+            //   let item = 
+            //   <div className="col text-left">
+            //   <a>
+            //     <b />
+            //   </a>
+            //   <b>
+            //     <Link to="/project/"{...elem.handle} className="link-primary">
+            //     {elem.name}
+            //     </Link>
+            //   </b>\
+            //   <br /> Полезная информация
+            // </div>
+
+            item = <div>nasrano</div>
+        
+            jsx.push(item)
+            console.log(item)
+        }
       })
     })
+    console.log(jsx)
+    return (<div>{jsx}</div>)
+    
   
 }
 
 function Home() {
-    let user = localStorage.getItem("user")
-    console.log(JSON.parse(user)["id"])
-
     
-
   let navigate = useNavigate(); 
   const routeChange = () =>{ 
     let path = '/project'; 
