@@ -49,7 +49,7 @@ function Fill_projects(){
             //   <br /> Полезная информация
             // </div>
 
-            item = <div>nasrano</div>
+            var item = <div>nasrano</div>
         
             jsx.push(item)
             console.log(item)
