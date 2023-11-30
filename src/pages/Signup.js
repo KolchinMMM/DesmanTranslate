@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom"
 import Navbar from "./Navbar"
 import Footer from "./Footer"
-import api_link from "../App"
 
 import React, { setState, useEffect, useState, formData } from "react"
 
@@ -44,15 +43,17 @@ export default function Signup(){
         {
             method:"POST",
             body: JSON.stringify({
-                "username": "jopaaa",
-                "email": "maaaail@gmail.com",
-                "password": "oooooblyaaa"
+                "username": inputLogin,
+                "email": inputMail,
+                "password": inputPass
              }),
              headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-            },
-        }).then((response) => response.json())
-        console.log(jopa)
+            }
+            
+        })
+
+        console.log(await jopa.json())
     }
     
 

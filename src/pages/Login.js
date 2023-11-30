@@ -1,8 +1,41 @@
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import React, { useState } from "react"
+export default function Login(){
 
-function Login(){
+    const [inputMail, setInputMail] = useState("");
+    const [inputPass, setInputPass] = useState("");
+
+    const mailChange = event => setInputMail(event.target.value);
+
+    const passChange = event => setInputPass(event.target.value);
+
+    async function Submit(event){
+        event.preventDefault()
+        console.log(JSON.stringify({
+            "username": inputMail,
+            "password": inputPass
+         }))
+        const jopa = await fetch("http://127.0.0.1:3000/api/login",
+        {
+            method:"POST",
+            body: JSON.stringify({
+                "username": inputMail,
+                "password": inputPass
+             }),
+             headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+            },
+            credentials:"include",
+            
+        })
+        console.log(await jopa.json())
+    }
+
+    
+
+
     return (
         <>
             <Navbar/>
@@ -22,13 +55,14 @@ function Login(){
                     <label htmlFor="inputEmailLogin" className="form-label">
                         Электронная почта
                     </label>
-                    <input type="email" className="form-control" id="inputEmailLogin" />
+                    <input className="form-control" id="inputEmailLogin" onChange={mailChange}/>
                     </div>
                     <div className="mb-3">
                     <label htmlFor="inputPasswordLogin" className="form-label">
                         Пароль
                     </label>
                     <input
+                        onChange={passChange}
                         type="password"
                         className="form-control"
                         id="inputPasswordLogin"
@@ -44,7 +78,7 @@ function Login(){
                         Запомнить аккаунт
                     </label>
                     </div>
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="btn btn-primary" onClick={Submit}>
                     Войти
                     </button>
                 </form>
@@ -53,5 +87,3 @@ function Login(){
         </>
     );
 }
-
-export default Login;
