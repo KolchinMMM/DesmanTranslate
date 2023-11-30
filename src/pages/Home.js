@@ -3,8 +3,12 @@ import Navbar from "./Navbar"
 import Footer from "./Footer"
 import placeholder from "../images/placeholder.png"
 import React, { useEffect, useState } from "react"
+import Button from "react-bootstrap/Button"
+import { useNavigate } from "react-router-dom"
 
 import api_link from "../App"
+
+
 
 function Home() {
 
@@ -25,6 +29,12 @@ function Home() {
 	  }, [])
 
 	console.log(users)
+
+  let navigate = useNavigate(); 
+  const routeChange = () =>{ 
+    let path = `/project`; 
+    navigate(path);
+  }
 
   	return (
     <>
@@ -195,14 +205,12 @@ function Home() {
               перевод любого текста.
             </p>
             <p>Have a lot of fun...</p>
-            <button
-              type="button"
-              className="btn btn-primary"
+            <Button variant="primary"
               style={{ marginTop: "-10px" }}
-              onclick="location.href = 'newproject.html';"
+              onClick={routeChange}
             >
               Создать проект
-            </button>
+            </Button>
           </div>
         </div>
       </div>
