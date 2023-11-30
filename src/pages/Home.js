@@ -9,26 +9,25 @@ import { useNavigate } from "react-router-dom"
 import api_link from "../App"
 
 
+function Fill_projects(){
+  let jopa = fetch("http://127.0.0.1:3000/api/projects",
+    {
+        method:"GET",
+        credentials:"include",  
+    }).then((response) => response.json())
+    .then((data) => {
+      data.forEach(elem =>{
+        console.log(elem)
+      })
+    })
+  
+}
 
 function Home() {
+    let user = localStorage.getItem("user")
+    console.log(JSON.parse(user)["id"])
 
-  	const [users, setUsers] = useState([])
-
-	const fetchUserData = () => {
-	fetch(api_link+"api/projects")
-		.then(response => {
-		return response.json()
-		})
-		.then(data => {
-		setUsers(data)
-		})
-	}
-
-	useEffect(() => {
-		fetchUserData()
-	  }, [])
-
-	console.log(users)
+    
 
   let navigate = useNavigate(); 
   const routeChange = () =>{ 
@@ -39,6 +38,7 @@ function Home() {
   	return (
     <>
       <Navbar />
+      <Fill_projects/>
       <div className="container" style={{ marginTop: 50 }}>
         <div className="row">
           <div className="col-6 text-left" style={{ paddingRight: "5%" }}>
