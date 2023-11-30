@@ -57,12 +57,12 @@ export default function Signup(){
           {
              throw new Error(response.status)
           }
-        }).cathch(
+        }).catch(
             function(error){
                 console.log("Во мудак")
             }
         )
-        console.log(await jopa.json())
+        //console.log(await jopa.json())
     }
     
 
