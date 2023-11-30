@@ -51,8 +51,17 @@ export default function Signup(){
                 'Content-Type': 'application/json; charset=UTF-8',
             }
             
-        })
-
+        }).then(function(response)
+        {
+         if(response.status!==200)
+          {
+             throw new Error(response.status)
+          }
+        }).cathch(
+            function(error){
+                console.log("Во мудак")
+            }
+        )
         console.log(await jopa.json())
     }
     

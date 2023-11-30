@@ -11,13 +11,19 @@ export default function Login(){
 
     const passChange = event => setInputPass(event.target.value);
 
+    const [errorVisibility, setErrorVisibility] = useState(false);
+
+    function toggle() {
+        setErrorVisibility((errorVisibility) => "true");
+      }
+
     async function Submit(event){
         event.preventDefault()
         console.log(JSON.stringify({
             "username": inputMail,
             "password": inputPass
          }))
-        const jopa = await fetch("http://127.0.0.1:3000/api/login",
+        let jopa = await fetch("http://127.0.0.1:3000/api/login",
         {
             method:"POST",
             body: JSON.stringify({
@@ -29,8 +35,21 @@ export default function Login(){
             },
             credentials:"include",
             
+        }).then( response => {
+            if (!response.ok) { 
+                console.log("Huevo poluchilos'")
+                toggle()
+            }
+            return response.json()
+        }).then( data=>{
+            localStorage.setItem("user", JSON.stringify(data))
+            console.log(data)
         })
-        console.log(await jopa.json())
+
+
+
+
+        
     }
 
     
@@ -78,6 +97,7 @@ export default function Login(){
                         Запомнить аккаунт
                     </label>
                     </div>
+                    {errorVisibility && <div id="error">Насрал говном!!!</div>}
                     <button type="submit" className="btn btn-primary" onClick={Submit}>
                     Войти
                     </button>
