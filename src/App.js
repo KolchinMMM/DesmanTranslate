@@ -7,6 +7,7 @@ import Search from "./pages/Search.js";
 import User from "./pages/User.js";
 import Login from "./pages/Login.js";
 import Signup from "./pages/Signup.js";
+import Project from './pages/Project.js';
 
 const api_link = "127.0.0.1:3000"
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="user" element={ <User/> } />
         <Route path="login" element={ <Login/> } />
         <Route path="signup" element={ <Signup/> } />
+        <Route path="project:id" element={<Project />} />
       </Routes>
     </div>
   )

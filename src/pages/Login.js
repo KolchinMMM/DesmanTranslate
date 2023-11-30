@@ -2,7 +2,10 @@ import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import React, { useState } from "react"
+import { useNavigate } from "react-router-dom";
+
 export default function Login(){
+    const navigate = useNavigate();
 
     const [inputMail, setInputMail] = useState("");
     const [inputPass, setInputPass] = useState("");
@@ -40,10 +43,14 @@ export default function Login(){
                 console.log("Huevo poluchilos'")
                 toggle()
             }
-            return response.json()
+            else return response.json()
         }).then( data=>{
-            localStorage.setItem("user", JSON.stringify(data))
-            console.log(data)
+            if (typeof(data)!="undefined"){
+                console.log(typeof(data))
+                localStorage.setItem("user", JSON.stringify(data))
+                console.log(data)
+                navigate("../")
+            }
         })
 
 
