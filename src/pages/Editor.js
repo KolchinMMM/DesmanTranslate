@@ -123,6 +123,10 @@ export default function Editor(){
           <LinkWithTooltip tooltip="Добавить отрывок" href="#" id="tooltip-settings" where="bottom">
             <Button variant="outline-primary" style={{marginLeft: "10px"}}><FaPlus style={{marginBottom: "3px"}}/></Button>
           </LinkWithTooltip>
+          <LinkWithTooltip tooltip="Словарь" href="#" id="tooltip-settings" where="bottom">
+          <Button variant="outline-primary" style={{marginLeft: "10px"}}><FaBook style={{marginBottom: "3px"}}/></Button>
+          </LinkWithTooltip>
+        
           
           <Form style={{marginLeft: "10px"}}>
             <Form.Group controlId="pieceSearch">
@@ -143,25 +147,13 @@ export default function Editor(){
           <LinkWithTooltip tooltip="Прочее" href="#" id="tooltip-settings" where="bottom">
             <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaEllipsisV style={{marginBottom: "3px"}}/></Button>
           </LinkWithTooltip>
+          <LinkWithTooltip tooltip="Комментарии" href="#" id="tooltip-settings" where="bottom">
+          <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><BsChatLeftText style={{marginBottom: "3px"}}/></Button>
+          </LinkWithTooltip>
           
       </Col>
       
     </Container>
-
-    <Row>
-      <Col>
-      </Col>
-      <Col>
-      </Col>
-      <Col style={{marginRight: "10px"}}className="position-sticky border-bottom d-flex flex-column" md="auto">
-        <LinkWithTooltip tooltip="Словарь" href="#" id="tooltip-settings" where="left">
-          <Button variant="outline-primary" style={{margin: "10px 0px 0px 0px"}}><FaBook style={{marginBottom: "3px"}}/></Button>
-        </LinkWithTooltip>
-        <LinkWithTooltip tooltip="Комментарии" href="#" id="tooltip-settings" where="left">
-          <Button variant="outline-primary" style={{margin: "10px 0px 10px 0px"}}><BsChatLeftText style={{marginBottom: "3px"}}/></Button>
-        </LinkWithTooltip>
-      </Col>
-    </Row>
   </header>
 
   <Container fluid style={{marginTop: "110px"}}>
@@ -203,11 +195,6 @@ export default function Editor(){
           {Translation()}
           
 
-        </Col>
-        <Col className="border-bottom d-flex flex-column" md="auto">
-          <div style={{width: "40px"}}>
-
-          </div>
         </Col>
       </Row>
   </Container>
