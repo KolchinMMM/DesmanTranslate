@@ -83,19 +83,31 @@ return (
                 <tbody>
                     <tr>
                     <th scope="row">1</th>
-                    <td><a href="editor.html">Раздел 1.</a></td>
+                    <td>
+                        <Link to="/editor" className="link-primary">
+                            Раздел 1.
+                        </Link>
+                    </td>
                     <td>50 / 100 (50%)</td>
                     <td>Оригинал / Переведено</td>
                     </tr>
                     <tr>
                     <th scope="row">2</th>
-                    <td><a href="editor.html">Раздел 2.</a></td>
+                    <td>
+                        <Link to="/editor" className="link-primary">
+                            Раздел 2.
+                        </Link>
+                    </td>
                     <td>1 / 100 (1%)</td>
                     <td>Оригинал / Переведено</td>
                     </tr>
                     <tr>
                     <th scope="row">3</th>
-                    <td><a href="editor.html">Раздел 3.</a></td>
+                    <td>
+                        <Link to="/editor" className="link-primary">
+                            Раздел 3.
+                        </Link>
+                    </td>
                     <td>0 / 100 (0%)</td>
                     <td>Оригинал / Переведено</td>
                     </tr>
