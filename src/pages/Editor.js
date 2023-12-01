@@ -4,28 +4,78 @@ import Container from 'react-bootstrap/Container'
 import Form from "react-bootstrap/Form"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import FloatingLabel from 'react-bootstrap/FloatingLabel'
 import { useNavigate } from "react-router-dom"
-import { FaBars, FaCog, FaFilter, FaBookOpen, FaEyeSlash, FaPlus, FaCheck, FaCode, FaRegTrashAlt, FaEllipsisV, FaUndo, FaRedo, FaBook } from "react-icons/fa"
-import { BsChatLeftText, BsGlobe } from "react-icons/bs"
+import { FaCog, FaFilter, FaBookOpen, FaEyeSlash, FaPlus, FaCheck, FaCode, FaRegTrashAlt, FaEllipsisV, FaUndo, FaRedo, FaBook } from "react-icons/fa"
+import { BsReplyFill, BsChatLeftText, BsGlobe } from "react-icons/bs"
 
 import React, { setState, useEffect, useState, formData } from "react"
 
+function Piece(){
+  return(
+    <>
+      <Container fluid style={{margin: "0px", padding: "7px", minHeight: "100px"}} className="py-2 d-flex justify-content-between">
+        <Col md="auto" className="d-flex align-items-center" style={{marginRight: "10px", marginTop: "20px"}}>
+          <Form className="d-flex align-items-center">
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+              <Form.Check type="checkbox"/>
+            </Form.Group>        
+          </Form>
+        </Col>
+        <Col style={{marginRight: "10px"}}>
+          <Form.Control className="d-flex align-items-start"
+            readOnly
+            as="textarea"
+            style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+          >
+              aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+          </Form.Control>
+        </Col>
+        <Col>
+          <Form.Control className="d-flex align-items-start"
+            readOnly
+            as="textarea"
+            style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+          >
+              Здесь отображается самый новый перевод. Пользователь может редактировать только свой перевод.
+          </Form.Control>
+        </Col>
+      </Container>
+    </>
+  )
+}
+
+function Translation(){
+  return(
+    <>
+      <FloatingLabel controlId="translationVariant" label="Ник пользователя">
+        <Form.Control
+          as="textarea"
+          readOnly
+          style={{ marginTop: "10px", minHeight: "100px", wordWrap: "break-word" }}
+        >
+          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        </Form.Control>
+      </FloatingLabel>
+    </>
+  )
+}
 
 export default function Editor(){
 
-//   var id = 0 // ВРЕМЕННАЯ ФИГНЯ, ПОТОМ ПЕРЕДЕЛАТЬ
-//   let navigate = useNavigate(); 
-//   const routeChange = () =>{ 
-//   let path = '/project/:id'; 
-//   navigate(path);
-//   }
+  var id = 0 // ВРЕМЕННАЯ ФИГНЯ, ПОТОМ ПЕРЕДЕЛАТЬ
+  let navigate = useNavigate(); 
+  const routeChange = () =>{ 
+  let path = '/project/:id'; 
+  navigate(path);
+  }
 
   return (
   <>
-    <header>
-    <Container fluid className="py-1 border-bottom d-flex flex-wrap justify-content-between">
+    <header className="fixed-top" expand="lg">
+    <Container fluid className="bg-white py-1 border-bottom d-flex flex-wrap justify-content-between">
       <div className="d-inline-flex align-items-center">
-        <Button variant="outline-dark"><FaBars style={{marginBottom: "3px"}}/></Button>        
+        <Button variant="outline-dark" onClick={routeChange}><BsReplyFill style={{marginBottom: "3px"}}/></Button>        
       </div>
       <div className="d-inline-flex align-items-center">
         <h3 className="pt-1">Проект: Раздел</h3>
@@ -35,9 +85,11 @@ export default function Editor(){
       </div>
     </Container>
     
-    <Container fluid className="row py-1 d-flex flex-wrap justify-content-between">
-      <Col>
-        <div className="py-1 d-inline-flex align-items-center">
+    <Container fluid
+    className="border-bottom bg-white row py-1 d-flex flex-wrap justify-content-between"
+    style={{margin: "0px"}}
+    >
+      <Col className="py-1 d-inline-flex align-items-center">
           <Button variant="link"><FaUndo style={{marginBottom: "3px"}}/></Button>
           <Button variant="link"><FaRedo style={{marginBottom: "3px"}}/></Button>
           <Button variant="outline-primary" style={{marginLeft: "10px"}}><FaFilter style={{marginBottom: "3px"}}/></Button>
@@ -49,31 +101,73 @@ export default function Editor(){
               <Form.Control type="search" placeholder="Поиск..."/>
             </Form.Group>
           </Form>
-        </div>
       </Col>
-      <Col>
-        <div className="py-1 d-inline-flex align-items-center">
+      <Col className="py-1 d-inline-flex align-items-center">
           <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaCheck style={{marginBottom: "3px"}}/></Button>
           <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaEyeSlash style={{marginBottom: "3px"}}/></Button>
           <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaRegTrashAlt style={{marginBottom: "3px"}}/></Button>
           <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaEllipsisV style={{marginBottom: "3px"}}/></Button>
-        </div>
+      </Col>
+      
+    </Container>
+
+    <Row>
+      <Col>
       </Col>
       <Col>
       </Col>
-    </Container>
+      <Col style={{marginRight: "10px"}}className="position-sticky border-bottom d-flex flex-column" md="auto">
+        <Button variant="outline-primary" style={{margin: "10px 0px 0px 0px"}}><FaBook style={{marginBottom: "3px"}}/></Button>
+        <Button variant="outline-primary" style={{margin: "10px 0px 0px 0px"}}><BsChatLeftText style={{marginBottom: "3px"}}/></Button>
+        <Button variant="outline-primary" style={{margin: "10px 0px 10px 0px"}}><BsGlobe style={{marginBottom: "3px"}}/></Button>
+      </Col>
+    </Row>
   </header>
 
-  <Container fluid>
+  <Container fluid style={{marginTop: "110px"}}>
       <Row>
-        <Col className="border" ></Col>
-        <Col className="border" md={4}>
-          <Button variant="info" style={{margin: "10px 0px 0px 0px"}}><FaPlus style={{marginBottom: "3px"}}/></Button>
+        <Col className="border-bottom" style={{padding: "0px"}}>
+        {Piece()}
+        <hr style={{padding: "0px", margin: "0px"}}/>
+        {Piece()}
+        <hr style={{padding: "0px", margin: "0px"}}/>
+        {Piece()}
+        <hr style={{padding: "0px", margin: "0px"}}/>
+        {Piece()}
+        <hr style={{padding: "0px", margin: "0px"}}/>
+        {Piece()}
+        <hr style={{padding: "0px", margin: "0px"}}/>
+        {Piece()}
+        <hr style={{padding: "0px", margin: "0px"}}/>
+        {Piece()}
+        <hr style={{padding: "0px", margin: "0px"}}/>
+        {Piece()}
+        <hr style={{padding: "0px", margin: "0px"}}/>
+        {Piece()}
+        <hr style={{padding: "0px", margin: "0px"}}/>
+        {Piece()}
+          
         </Col>
-        <Col className="border d-flex flex-column" md="auto">
-          <Button variant="outline-primary" style={{margin: "10px 0px 0px 0px"}}><FaBook style={{marginBottom: "3px"}}/></Button>
-          <Button variant="outline-primary" style={{margin: "10px 0px 0px 0px"}}><BsChatLeftText style={{marginBottom: "3px"}}/></Button>
-          <Button variant="outline-primary" style={{margin: "10px 0px 10px 0px", height: "100%"}}><BsGlobe style={{marginBottom: "3px"}}/></Button>
+        <Col className="border-start border-end border-bottom" md={4}>
+          <Button variant="outline-success" style={{margin: "10px 0px 10px 0px"}}><FaPlus style={{marginBottom: "3px", marginRight: "3px"}}/>  Добавить перевод </Button>
+          <Form.Control className="d-flex align-items-start"
+            as="textarea"
+            placeholder="Ваш вариант перевода..."
+            style={{ marginBottom: "10px", paddingTop: "5px", paddingLeft: "10px", minHeight: "85px", wordWrap: "break-word" }}
+          >
+          </Form.Control>
+          
+          <h3>Варианты перевода</h3>
+          {Translation()}
+          {Translation()}
+          {Translation()}
+          
+
+        </Col>
+        <Col className="border-bottom d-flex flex-column" md="auto">
+          <div style={{width: "40px"}}>
+
+          </div>
         </Col>
       </Row>
   </Container>
