@@ -10,7 +10,20 @@ import { FaCog, FaFilter, FaBookOpen, FaEyeSlash, FaPlus, FaCheck, FaCode, FaReg
 import { BsReplyFill, BsChatLeftText, BsGlobe } from "react-icons/bs"
 
 import React, { setState, useEffect, useState, formData } from "react"
-import { OverlayTrigger } from "react-bootstrap"
+import { OverlayTrigger, Tooltip } from "react-bootstrap"
+
+function LinkWithTooltip({ id, children, href, tooltip, where }) {
+  return (
+    <OverlayTrigger
+      overlay={<Tooltip id={id}>{tooltip}</Tooltip>}
+      placement={where}
+      delayShow={300}
+      delayHide={150}
+    >
+      <a href={href}>{children}</a>
+    </OverlayTrigger>
+  );
+}
 
 function Piece(){
   return(
@@ -29,7 +42,7 @@ function Piece(){
             as="textarea"
             style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
           >
-              aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
           </Form.Control>
         </Col>
         <Col>
@@ -38,7 +51,7 @@ function Piece(){
             as="textarea"
             style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
           >
-              Здесь отображается самый новый перевод. Пользователь может редактировать только свой перевод.
+            Здесь отображается самый новый перевод. Пользователь может редактировать только свой перевод.
           </Form.Control>
         </Col>
       </Container>
@@ -76,13 +89,17 @@ export default function Editor(){
     <header className="fixed-top" expand="lg">
     <Container fluid className="bg-white py-1 border-bottom d-flex flex-wrap justify-content-between">
       <div className="d-inline-flex align-items-center">
-        <Button variant="outline-dark" onClick={routeChange}><BsReplyFill style={{marginBottom: "3px"}}/></Button> 
+        <LinkWithTooltip tooltip="Вернуться к проекту" href="#" id="tooltip-back" where="bottom">
+          <Button variant="outline-dark" onClick={routeChange}><BsReplyFill style={{marginBottom: "3px"}}/></Button>
+        </LinkWithTooltip>
       </div>
       <div className="d-inline-flex align-items-center">
         <h3 className="pt-1">Проект: Раздел</h3>
       </div>
       <div className="d-inline-flex align-items-center">
-        <Button variant="outline-dark"><FaCog style={{marginBottom: "3px"}}/></Button>
+        <LinkWithTooltip tooltip="Настройки редактора" href="#" id="tooltip-settings" where="bottom">
+          <Button variant="outline-dark"><FaCog style={{marginBottom: "3px"}}/></Button>
+        </LinkWithTooltip>
       </div>
     </Container>
     
@@ -91,12 +108,22 @@ export default function Editor(){
     style={{margin: "0px"}}
     >
       <Col className="py-1 d-inline-flex align-items-center">
-          <Button variant="link"><FaUndo style={{marginBottom: "3px"}}/></Button>
-          <Button variant="link"><FaRedo style={{marginBottom: "3px"}}/></Button>
-          <Button variant="outline-primary" style={{marginLeft: "10px"}}><FaFilter style={{marginBottom: "3px"}}/></Button>
-          <Button variant="outline-primary" style={{marginLeft: "10px"}}><FaBookOpen style={{marginBottom: "3px"}}/></Button>
-          <Button variant="outline-primary" style={{marginLeft: "10px"}}><FaCode style={{marginBottom: "3px"}}/></Button>
-          <Button variant="outline-primary" style={{marginLeft: "10px"}}><FaPlus style={{marginBottom: "3px"}}/></Button>
+          <LinkWithTooltip tooltip="Отменить" href="#" id="tooltip-settings" where="bottom">
+            <Button variant="link"><FaUndo style={{marginBottom: "3px"}}/></Button>
+          </LinkWithTooltip>
+          <LinkWithTooltip tooltip="Повторить" href="#" id="tooltip-settings" where="bottom">
+            <Button variant="link"><FaRedo style={{marginBottom: "3px"}}/></Button>
+          </LinkWithTooltip>
+          <LinkWithTooltip tooltip="Фильтр" href="#" id="tooltip-settings" where="bottom">
+            <Button variant="outline-primary" style={{marginLeft: "10px"}}><FaFilter style={{marginBottom: "3px"}}/></Button>
+          </LinkWithTooltip>
+          <LinkWithTooltip tooltip="Скрыть исходник" href="#" id="tooltip-settings" where="bottom">
+            <Button variant="outline-primary" style={{marginLeft: "10px"}}><FaCode style={{marginBottom: "3px"}}/></Button>
+          </LinkWithTooltip>
+          <LinkWithTooltip tooltip="Добавить отрывок" href="#" id="tooltip-settings" where="bottom">
+            <Button variant="outline-primary" style={{marginLeft: "10px"}}><FaPlus style={{marginBottom: "3px"}}/></Button>
+          </LinkWithTooltip>
+          
           <Form style={{marginLeft: "10px"}}>
             <Form.Group controlId="pieceSearch">
               <Form.Control type="search" placeholder="Поиск..."/>
@@ -104,10 +131,19 @@ export default function Editor(){
           </Form>
       </Col>
       <Col className="py-1 d-inline-flex align-items-center">
-          <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaCheck style={{marginBottom: "3px"}}/></Button>
-          <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaEyeSlash style={{marginBottom: "3px"}}/></Button>
-          <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaRegTrashAlt style={{marginBottom: "3px"}}/></Button>
-          <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaEllipsisV style={{marginBottom: "3px"}}/></Button>
+          <LinkWithTooltip tooltip="Одобрить перевод" href="#" id="tooltip-settings" where="bottom">
+            <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaCheck style={{marginBottom: "3px"}}/></Button>
+          </LinkWithTooltip>
+          <LinkWithTooltip tooltip="Скрыть отрывок" href="#" id="tooltip-settings" where="bottom">
+            <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaEyeSlash style={{marginBottom: "3px"}}/></Button>
+          </LinkWithTooltip>
+          <LinkWithTooltip tooltip="Удалить отрывок" href="#" id="tooltip-settings" where="bottom">
+            <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaRegTrashAlt style={{marginBottom: "3px"}}/></Button>
+          </LinkWithTooltip>
+          <LinkWithTooltip tooltip="Прочее" href="#" id="tooltip-settings" where="bottom">
+            <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaEllipsisV style={{marginBottom: "3px"}}/></Button>
+          </LinkWithTooltip>
+          
       </Col>
       
     </Container>
@@ -118,9 +154,12 @@ export default function Editor(){
       <Col>
       </Col>
       <Col style={{marginRight: "10px"}}className="position-sticky border-bottom d-flex flex-column" md="auto">
-        <Button variant="outline-primary" style={{margin: "10px 0px 0px 0px"}}><FaBook style={{marginBottom: "3px"}}/></Button>
-        <Button variant="outline-primary" style={{margin: "10px 0px 0px 0px"}}><BsChatLeftText style={{marginBottom: "3px"}}/></Button>
-        <Button variant="outline-primary" style={{margin: "10px 0px 10px 0px"}}><BsGlobe style={{marginBottom: "3px"}}/></Button>
+        <LinkWithTooltip tooltip="Словарь" href="#" id="tooltip-settings" where="left">
+          <Button variant="outline-primary" style={{margin: "10px 0px 0px 0px"}}><FaBook style={{marginBottom: "3px"}}/></Button>
+        </LinkWithTooltip>
+        <LinkWithTooltip tooltip="Комментарии" href="#" id="tooltip-settings" where="left">
+          <Button variant="outline-primary" style={{margin: "10px 0px 10px 0px"}}><BsChatLeftText style={{marginBottom: "3px"}}/></Button>
+        </LinkWithTooltip>
       </Col>
     </Row>
   </header>
