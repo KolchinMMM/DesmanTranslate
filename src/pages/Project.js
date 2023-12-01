@@ -6,20 +6,57 @@ import Tabs from 'react-bootstrap/Tabs';
 import placeholder from "../images/placeholder.png";
 
 import React, { useEffect, useState } from "react"
-const user = JSON.parse(localStorage.getItem("user"))
-console.log(user.id)
+import user from "./Navbar"
 
 
 function Project(props){
 
+    const [name, setName] = useState([]);
+
+    const [sourceLang, setSourceLang] = useState([]);
+
+    const [targetLang, setTargetLang] = useState([]);
+
+    const [visibility, setVisibility] = useState([]);
+
+    const [status, setStatus] = useState([]);
+
+    const [description, setDescription] = useState([]);
+
+    const [ownerId, setOwnerId] = useState([]);
+
+    const [category, setCategory] = useState([]);
+
     const link = useParams()
 
-    console.log(link)
+    console.log(link["id"])
 
 
-    function Get_project(){
-        fetch("127.0.0.1:5000/api/projects/"+link["id"])
-        .then((response) => console.log(response.data))
+    async function Get_project(){
+        await fetch("/api/projects/"+link["id"])
+        .then(response => response.json())
+        .then(data => {
+
+            setCategory(data.category)
+            setDescription(data.description)
+            setName(data.name)
+            setSourceLang(data.source_lang)
+            setTargetLang(data.target_lang)
+            setVisibility(data.visibility)
+            setOwnerId(data.owner_id)
+
+            console.log("dfghy")
+
+            console.log(category +"\n"+
+                        description+"\n"+
+                        name+"\n"+
+                        sourceLang+"\n"+
+                        targetLang+"\n"+
+                        visibility)
+
+
+
+        }).catch(error => console.log(error))
         
     }
 
@@ -33,7 +70,7 @@ function Project(props){
     <>
         <Navbar/>
         <div className="container" style={{ marginTop: 50 }}>
-        <h1 style={{marginTop: '20px', marginBottom: '20px'}}>(Название проекта)</h1>
+        <h1 style={{marginTop: '20px', marginBottom: '20px'}}>{name}</h1>
             {/* вкладочки */}
             <Tabs
             defaultActiveKey="project"

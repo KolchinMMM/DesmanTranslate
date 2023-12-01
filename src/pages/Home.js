@@ -7,7 +7,12 @@ import Button from "react-bootstrap/Button"
 import { useNavigate } from "react-router-dom"
 
 import api_link from "../App"
-const user = JSON.parse(localStorage.getItem("user"))
+
+var user = ""
+if (localStorage.getItem("user") != null){
+  user = JSON.parse(localStorage.getItem("user"))
+}
+console.log(user)
 
 function Home() {
   const [projects, setProjects] = useState([]);
@@ -16,6 +21,7 @@ function Home() {
     fetch("/api/projects")
     .then((response) => response.json())
     .then((responseData) => {
+      if (user != ""){
 
         var answer = []
         var user_projects = new Array()
@@ -50,7 +56,7 @@ function Home() {
           }
         })
         setProjects(answer)
-      
+      }
 
     })
     .catch(error => console.warn(error));

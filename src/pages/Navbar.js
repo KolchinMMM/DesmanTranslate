@@ -1,6 +1,54 @@
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png"
+import React, { useEffect, useState } from "react"
+
+var user = ""
+if (localStorage.getItem("user") != null){
+  user = JSON.parse(localStorage.getItem("user"))
+}
+
 function Navbar(){
+    const [input, setInput] = useState("");
+
+    function Logout(){
+        localStorage.clear("user")
+        window.location.reload(false);
+    }
+
+    async function Change_info(){
+        if (user != ""){
+            setInput(<ul className="nav" style={{ display: "flex" }}>
+                <li className="nav-item">
+                    <Link to="/LK" className="nav-link link-body-emphasis px-2">
+                        Id:{user.id}
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <button onClick={Logout}>
+                        Выйти
+                    </button>
+                </li>
+            </ul>)
+        }else{
+            setInput(<ul className="nav" style={{ display: "flex" }}>
+                        <li className="nav-item">
+                            <Link to="/login" className="nav-link link-body-emphasis px-2">
+                            Войти
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/signup" className="nav-link link-body-emphasis px-2">
+                            Зарегистрироваться
+                            </Link>
+                        </li>
+                    </ul>)
+            }
+    }
+
+    useEffect(() => {
+        Change_info();
+    }, []);
+
     return (
         <>
             <header className="py-3 border-bottom">
@@ -48,18 +96,7 @@ function Navbar(){
                     </Link>
                     </li>
                 </ul>
-                <ul className="nav" style={{ display: "flex" }}>
-                    <li className="nav-item">
-                        <Link to="/login" className="nav-link link-body-emphasis px-2">
-                        Войти
-                        </Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to="/signup" className="nav-link link-body-emphasis px-2">
-                        Зарегистрироваться
-                        </Link>
-                    </li>
-                </ul>
+                {input}
                 </div>
             </nav>
             </>

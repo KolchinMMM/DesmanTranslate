@@ -14,28 +14,6 @@ export default function Signup(){
 
     const [users, setUsers] = useState([])
 
-	// const fetchUserData = () => {
-    //     const vals = {
-    //         "username": "jopaaa",
-    //         "email": "maaaail@gmail.com",
-    //         "password": "oooooblyaaa"
-    //     }
-
-
-    //     fetch("http://127.0.0.1:3000/api/projects",
-    //         {
-    //             method: "get",
-    //             data: vals
-    //         })
-    //     // axios.post("http://127.0.0.1:3000/api/register", vals)
-    //     //     .then(response => {
-    //     //     return response.json()
-    //     //     })
-    //     //     .then(data => {
-    //     //     setUsers(data)
-    //     //     })
-	// }
-
     async function Submit(event) {
         console.log(inputMail+inputLogin+inputPass+inputRepeatPass)
         event.preventDefault()
@@ -59,9 +37,10 @@ export default function Signup(){
           }
         }).catch(
             function(error){
-                console.log("Во мудак")
+                console.log(error)
             }
         )
+        
         //console.log(await jopa.json())
     }
     

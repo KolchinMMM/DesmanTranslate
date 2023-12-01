@@ -40,7 +40,6 @@ export default function Login(){
             
         }).then( response => {
             if (!response.ok) { 
-                console.log("Huevo poluchilos'")
                 toggle()
             }
             else return response.json()
@@ -50,13 +49,9 @@ export default function Login(){
                 localStorage.setItem("user", JSON.stringify(data))
                 console.log(data)
                 navigate("../")
+                window.location.reload(false);
             }
         })
-
-
-
-
-        
     }
 
     
@@ -79,7 +74,7 @@ export default function Login(){
                 <form>
                     <div className="mb-3">
                     <label htmlFor="inputEmailLogin" className="form-label">
-                        Электронная почта
+                        Логин
                     </label>
                     <input className="form-control" id="inputEmailLogin" onChange={mailChange}/>
                     </div>
@@ -104,7 +99,7 @@ export default function Login(){
                         Запомнить аккаунт
                     </label>
                     </div>
-                    {errorVisibility && <div id="error">Насрал говном!!!</div>}
+                    {errorVisibility && <div id="error">Неверный пароль!!!</div>}
                     <button type="submit" className="btn btn-primary" onClick={Submit}>
                     Войти
                     </button>
