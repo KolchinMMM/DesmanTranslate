@@ -9,61 +9,61 @@ import { useNavigate } from "react-router-dom"
 import api_link from "../App"
 const user = JSON.parse(localStorage.getItem("user"))
 
-function Fill_projects(){
-  let jsx = []
-  fetch("http://127.0.0.1:3000/api/projects",
-    {
-        method:"GET",
-        credentials:"include",  
-    })
-    .then((response) => response.json())
-    
-    .then((data) => {
-
-      var user_projects = new Array()
-
-      data.forEach(elem =>{
-        if (elem.owner_id === user.id)
-          user_projects.push(elem)
-      })
-
-      user_projects.sort(function(a, b) {
-        return a.created_at < b.created_at;
-      });
-
-      let count = 0
-
-      user_projects.forEach(elem => {
-        if (count != 2){
-            console.log(elem.name)
-            //   let item = 
-            //   <div className="col text-left">
-            //   <a>
-            //     <b />
-            //   </a>
-            //   <b>
-            //     <Link to="/project/"{...elem.handle} className="link-primary">
-            //     {elem.name}
-            //     </Link>
-            //   </b>\
-            //   <br /> Полезная информация
-            // </div>
-
-            var item = <div>nasrano</div>
-        
-            jsx.push(item)
-            console.log(item)
-        }
-      })
-    })
-    console.log(jsx)
-    return (<div>{jsx}</div>)
-    
-  
-}
-
 function Home() {
-    
+  const [projects, setProjects] = useState([]);
+
+  function Fill_projects(){
+    fetch("/api/projects")
+    .then((response) => response.json())
+    .then((responseData) => {
+
+
+////////////////////
+        var answer = []
+        var user_projects = new Array()
+        responseData.forEach(elem =>{
+          if (elem.owner_id === user.id)
+            user_projects.push(elem)
+        })
+  
+        user_projects.sort(function(a, b) {
+          return a.created_at < b.created_at;
+        });
+  
+        let count = 0
+  
+        user_projects.forEach(elem => {
+          if (count != 2){
+            console.log("dfghjkljhgf")
+            console.log(elem)
+
+
+                let item = 
+                <div className="col text-left">
+                
+                  <Link to={"/project/"+elem.handle} className="link-primary">
+                  {elem.name}
+                  </Link>
+                <br /> Полезная информация
+              </div>
+
+              answer.push(item)
+             // console.log(item)
+          }
+        })
+        setProjects(answer)
+      
+
+    })
+    .catch(error => console.warn(error));
+  
+  }
+
+  useEffect(() => {
+    Fill_projects();
+  }, []);
+
+
   let navigate = useNavigate(); 
   const routeChange = () =>{ 
     let path = '/create'; 
@@ -73,12 +73,12 @@ function Home() {
   	return (
     <>
       <Navbar />
-      <Fill_projects/>
       <div className="container" style={{ marginTop: 50 }}>
         <div className="row">
           <div className="col-6 text-left" style={{ paddingRight: "5%" }}>
             <h2>Недавние проекты:</h2>
-            <div
+            {projects}
+            {/* <div
               className="container text-left border-bottom"
               style={{ paddingBottom: 25 }}
             >
@@ -132,7 +132,7 @@ function Home() {
                   <br /> Полезная информация
                 </div>
               </div>
-            </div>
+            </div> */}
             <h2 style={{ marginTop: 20 }}>Популярные проекты:</h2>
             <div className="container text-left" style={{ paddingBottom: 10 }}>
               <div
