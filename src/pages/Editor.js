@@ -134,6 +134,7 @@ export default function Editor(){
             </Form.Group>
           </Form>
       </Col>
+      <Col></Col>
       <Col className="py-1 d-inline-flex align-items-center">
           <LinkWithTooltip tooltip="Одобрить перевод" href="#" id="tooltip-settings" where="bottom">
             <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaCheck style={{marginBottom: "3px"}}/></Button>
