@@ -36,8 +36,7 @@ export default function Editor(){
     </Container>
     
     <Container fluid className="row py-1 d-flex flex-wrap justify-content-between">
-      <Col>
-        <div className="py-1 d-inline-flex align-items-center">
+      <Col className="py-1 d-inline-flex align-items-center">
           <Button variant="link"><FaUndo style={{marginBottom: "3px"}}/></Button>
           <Button variant="link"><FaRedo style={{marginBottom: "3px"}}/></Button>
           <Button variant="outline-primary" style={{marginLeft: "10px"}}><FaFilter style={{marginBottom: "3px"}}/></Button>
@@ -49,15 +48,12 @@ export default function Editor(){
               <Form.Control type="search" placeholder="Поиск..."/>
             </Form.Group>
           </Form>
-        </div>
       </Col>
-      <Col>
-        <div className="py-1 d-inline-flex align-items-center">
+      <Col className="py-1 d-inline-flex align-items-center">
           <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaCheck style={{marginBottom: "3px"}}/></Button>
           <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaEyeSlash style={{marginBottom: "3px"}}/></Button>
           <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaRegTrashAlt style={{marginBottom: "3px"}}/></Button>
           <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaEllipsisV style={{marginBottom: "3px"}}/></Button>
-        </div>
       </Col>
       <Col>
       </Col>
@@ -66,14 +62,42 @@ export default function Editor(){
 
   <Container fluid>
       <Row>
-        <Col className="border" ></Col>
+        <Col className="border-bottom border-top">
+          <Container fluid style={{padding: "0px", height: "100%"}} className="py-2 d-flex justify-content-between">
+            <Col md="auto" className="d-flex align-items-center" style={{marginRight: "10px", marginTop: "10px"}}>
+              <Form className="d-flex align-items-center">
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                  <Form.Check type="checkbox"/>
+                </Form.Group>        
+              </Form>
+            </Col>
+            <Col style={{marginRight: "10px"}}>
+              <Form.Control className="d-flex align-items-start"
+                readOnly
+                as="textarea"
+                style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+              >
+                 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+              </Form.Control>
+            </Col>
+            <Col>
+              <Form.Control className="d-flex align-items-start"
+                readOnly
+                as="textarea"
+                style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+              >
+                 Здесь отображается самый новый перевод. Пользователь может редактировать только свой перевод.
+              </Form.Control>
+            </Col>
+          </Container>
+        </Col>
         <Col className="border" md={4}>
           <Button variant="info" style={{margin: "10px 0px 0px 0px"}}><FaPlus style={{marginBottom: "3px"}}/></Button>
         </Col>
-        <Col className="border d-flex flex-column" md="auto">
+        <Col className="border-bottom border-top d-flex flex-column" md="auto">
           <Button variant="outline-primary" style={{margin: "10px 0px 0px 0px"}}><FaBook style={{marginBottom: "3px"}}/></Button>
           <Button variant="outline-primary" style={{margin: "10px 0px 0px 0px"}}><BsChatLeftText style={{marginBottom: "3px"}}/></Button>
-          <Button variant="outline-primary" style={{margin: "10px 0px 10px 0px", height: "100%"}}><BsGlobe style={{marginBottom: "3px"}}/></Button>
+          <Button variant="outline-primary" style={{margin: "10px 0px 10px 0px"}}><BsGlobe style={{marginBottom: "3px"}}/></Button>
         </Col>
       </Row>
   </Container>
