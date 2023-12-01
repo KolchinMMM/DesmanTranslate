@@ -10,6 +10,7 @@ import { FaCog, FaFilter, FaBookOpen, FaEyeSlash, FaPlus, FaCheck, FaCode, FaReg
 import { BsReplyFill, BsChatLeftText, BsGlobe } from "react-icons/bs"
 
 import React, { setState, useEffect, useState, formData } from "react"
+import { OverlayTrigger } from "react-bootstrap"
 
 function Piece(){
   return(
@@ -75,7 +76,7 @@ export default function Editor(){
     <header className="fixed-top" expand="lg">
     <Container fluid className="bg-white py-1 border-bottom d-flex flex-wrap justify-content-between">
       <div className="d-inline-flex align-items-center">
-        <Button variant="outline-dark" onClick={routeChange}><BsReplyFill style={{marginBottom: "3px"}}/></Button>        
+        <Button variant="outline-dark" onClick={routeChange}><BsReplyFill style={{marginBottom: "3px"}}/></Button> 
       </div>
       <div className="d-inline-flex align-items-center">
         <h3 className="pt-1">Проект: Раздел</h3>
