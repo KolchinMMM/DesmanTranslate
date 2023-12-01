@@ -62,9 +62,9 @@ export default function Editor(){
 
   <Container fluid>
       <Row>
-        <Col className="border-bottom border-top">
-          <Container fluid style={{padding: "0px", height: "100%"}} className="py-2 d-flex justify-content-between">
-            <Col md="auto" className="d-flex align-items-center" style={{marginRight: "10px", marginTop: "10px"}}>
+        <Col className="border-bottom border-top" style={{padding: "0px"}}>
+          <Container fluid style={{margin: "0px 5px 0px 0px", minHeight: "150px"}} className="py-2 d-flex justify-content-between">
+            <Col md="auto" className="d-flex align-items-center" style={{marginRight: "10px", marginTop: "20px"}}>
               <Form className="d-flex align-items-center">
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                   <Form.Check type="checkbox"/>
@@ -90,6 +90,218 @@ export default function Editor(){
               </Form.Control>
             </Col>
           </Container>
+
+          <hr style={{margin: "0px"}}></hr>
+
+          <Container fluid style={{margin: "0px 5px 0px 0px", minHeight: "150px"}} className="py-2 d-flex justify-content-between">
+            <Col md="auto" className="d-flex align-items-center" style={{marginRight: "10px", marginTop: "20px"}}>
+              <Form className="d-flex align-items-center">
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                  <Form.Check type="checkbox"/>
+                </Form.Group>        
+              </Form>
+            </Col>
+            <Col style={{marginRight: "10px"}}>
+              <Form.Control className="d-flex align-items-start"
+                readOnly
+                as="textarea"
+                style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+              >
+                 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+              </Form.Control>
+            </Col>
+            <Col>
+              <Form.Control className="d-flex align-items-start"
+                readOnly
+                as="textarea"
+                style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+              >
+                 Здесь отображается самый новый перевод. Пользователь может редактировать только свой перевод.
+              </Form.Control>
+            </Col>
+          </Container>
+
+          <hr style={{margin: "0px"}}></hr>
+
+          <Container fluid style={{margin: "0px 5px 0px 0px", minHeight: "150px"}} className="py-2 d-flex justify-content-between">
+            <Col md="auto" className="d-flex align-items-center" style={{marginRight: "10px", marginTop: "20px"}}>
+              <Form className="d-flex align-items-center">
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                  <Form.Check type="checkbox"/>
+                </Form.Group>        
+              </Form>
+            </Col>
+            <Col style={{marginRight: "10px"}}>
+              <Form.Control className="d-flex align-items-start"
+                readOnly
+                as="textarea"
+                style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+              >
+                 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+              </Form.Control>
+            </Col>
+            <Col>
+              <Form.Control className="d-flex align-items-start"
+                readOnly
+                as="textarea"
+                style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+              >
+                 Здесь отображается самый новый перевод. Пользователь может редактировать только свой перевод.
+              </Form.Control>
+            </Col>
+          </Container>
+
+          <hr style={{margin: "0px"}}></hr>
+
+          <Container fluid style={{margin: "0px 5px 0px 0px", minHeight: "150px"}} className="py-2 d-flex justify-content-between">
+            <Col md="auto" className="d-flex align-items-center" style={{marginRight: "10px", marginTop: "20px"}}>
+              <Form className="d-flex align-items-center">
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                  <Form.Check type="checkbox"/>
+                </Form.Group>        
+              </Form>
+            </Col>
+            <Col style={{marginRight: "10px"}}>
+              <Form.Control className="d-flex align-items-start"
+                readOnly
+                as="textarea"
+                style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+              >
+                 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+              </Form.Control>
+            </Col>
+            <Col>
+              <Form.Control className="d-flex align-items-start"
+                readOnly
+                as="textarea"
+                style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+              >
+                 Здесь отображается самый новый перевод. Пользователь может редактировать только свой перевод.
+              </Form.Control>
+            </Col>
+          </Container>
+
+          <hr style={{margin: "0px"}}></hr>
+
+          <Container fluid style={{margin: "0px 5px 0px 0px", minHeight: "150px"}} className="py-2 d-flex justify-content-between">
+            <Col md="auto" className="d-flex align-items-center" style={{marginRight: "10px", marginTop: "20px"}}>
+              <Form className="d-flex align-items-center">
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                  <Form.Check type="checkbox"/>
+                </Form.Group>        
+              </Form>
+            </Col>
+            <Col style={{marginRight: "10px"}}>
+              <Form.Control className="d-flex align-items-start"
+                readOnly
+                as="textarea"
+                style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+              >
+                 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+              </Form.Control>
+            </Col>
+            <Col>
+              <Form.Control className="d-flex align-items-start"
+                readOnly
+                as="textarea"
+                style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+              >
+                 Здесь отображается самый новый перевод. Пользователь может редактировать только свой перевод.
+              </Form.Control>
+            </Col>
+          </Container>
+
+          <hr style={{margin: "0px"}}></hr>
+
+          <Container fluid style={{margin: "0px 5px 0px 0px", minHeight: "150px"}} className="py-2 d-flex justify-content-between">
+            <Col md="auto" className="d-flex align-items-center" style={{marginRight: "10px", marginTop: "20px"}}>
+              <Form className="d-flex align-items-center">
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                  <Form.Check type="checkbox"/>
+                </Form.Group>        
+              </Form>
+            </Col>
+            <Col style={{marginRight: "10px"}}>
+              <Form.Control className="d-flex align-items-start"
+                readOnly
+                as="textarea"
+                style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+              >
+                 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+              </Form.Control>
+            </Col>
+            <Col>
+              <Form.Control className="d-flex align-items-start"
+                readOnly
+                as="textarea"
+                style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+              >
+                 Здесь отображается самый новый перевод. Пользователь может редактировать только свой перевод.
+              </Form.Control>
+            </Col>
+          </Container>
+
+          <hr style={{margin: "0px"}}></hr>
+
+          <Container fluid style={{margin: "0px 5px 0px 0px", minHeight: "150px"}} className="py-2 d-flex justify-content-between">
+            <Col md="auto" className="d-flex align-items-center" style={{marginRight: "10px", marginTop: "20px"}}>
+              <Form className="d-flex align-items-center">
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                  <Form.Check type="checkbox"/>
+                </Form.Group>        
+              </Form>
+            </Col>
+            <Col style={{marginRight: "10px"}}>
+              <Form.Control className="d-flex align-items-start"
+                readOnly
+                as="textarea"
+                style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+              >
+                 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+              </Form.Control>
+            </Col>
+            <Col>
+              <Form.Control className="d-flex align-items-start"
+                readOnly
+                as="textarea"
+                style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+              >
+                 Здесь отображается самый новый перевод. Пользователь может редактировать только свой перевод.
+              </Form.Control>
+            </Col>
+          </Container>
+
+          <hr style={{margin: "0px"}}></hr>
+
+          <Container fluid style={{margin: "0px 5px 0px 0px", minHeight: "150px"}} className="py-2 d-flex justify-content-between">
+            <Col md="auto" className="d-flex align-items-center" style={{marginRight: "10px", marginTop: "20px"}}>
+              <Form className="d-flex align-items-center">
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                  <Form.Check type="checkbox"/>
+                </Form.Group>        
+              </Form>
+            </Col>
+            <Col style={{marginRight: "10px"}}>
+              <Form.Control className="d-flex align-items-start"
+                readOnly
+                as="textarea"
+                style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+              >
+                 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+              </Form.Control>
+            </Col>
+            <Col>
+              <Form.Control className="d-flex align-items-start"
+                readOnly
+                as="textarea"
+                style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+              >
+                 Здесь отображается самый новый перевод. Пользователь может редактировать только свой перевод.
+              </Form.Control>
+            </Col>
+          </Container>
+
+          
         </Col>
         <Col className="border" md={4}>
           <Button variant="info" style={{margin: "10px 0px 0px 0px"}}><FaPlus style={{marginBottom: "3px"}}/></Button>
