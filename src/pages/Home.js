@@ -17,8 +17,6 @@ function Home() {
     .then((response) => response.json())
     .then((responseData) => {
 
-
-////////////////////
         var answer = []
         var user_projects = new Array()
         responseData.forEach(elem =>{
