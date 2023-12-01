@@ -137,7 +137,7 @@ export default function Editor(){
       <Col></Col>
       <Col className="py-1 d-inline-flex align-items-center">
           <LinkWithTooltip tooltip="Одобрить перевод" href="#" id="tooltip-settings" where="bottom">
-            <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaCheck style={{marginBottom: "3px"}}/></Button>
+            <Button disabled variant="outline-secondary"><FaCheck style={{marginBottom: "3px"}}/></Button>
           </LinkWithTooltip>
           <LinkWithTooltip tooltip="Скрыть отрывок" href="#" id="tooltip-settings" where="bottom">
             <Button disabled variant="outline-secondary" style={{marginLeft: "10px"}}><FaEyeSlash style={{marginBottom: "3px"}}/></Button>
