@@ -26,7 +26,7 @@ export default function Login(){
             "username": inputMail,
             "password": inputPass
          }))
-        let jopa = await fetch("http://127.0.0.1:3000/api/login",
+        let jopa = await fetch("/api/login",
         {
             method:"POST",
             body: JSON.stringify({

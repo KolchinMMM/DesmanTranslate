@@ -39,7 +39,7 @@ export default function Signup(){
     async function Submit(event) {
         console.log(inputMail+inputLogin+inputPass+inputRepeatPass)
         event.preventDefault()
-        const jopa = await fetch("http://127.0.0.1:3000/api/register",
+        const jopa = await fetch("/api/register",
         {
             method:"POST",
             body: JSON.stringify({
