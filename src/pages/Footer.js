@@ -7,7 +7,7 @@ function Footer(){
             <ul className="nav me-auto">
             <li className="nav-item">
                 <a
-                href="mailto:szimenkova7@gmail.com"
+                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
                 className="nav-link link-dark px-2"
                 >
                 Поддержка
@@ -16,7 +16,7 @@ function Footer(){
             </ul>
             <ul className="nav align-items-center">
             <li>
-                <a className="px-2" href="https://cs.petrsu.ru/">
+                <a className="px-2" href="https://www.youtube.com/watch?v=Sagg08DrO5U">
                 © ПетрГУ 2023
                 </a>
             </li>

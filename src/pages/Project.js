@@ -6,8 +6,11 @@ import Tabs from 'react-bootstrap/Tabs';
 import placeholder from "../images/placeholder.png";
 
 import React, { useEffect, useState } from "react"
-import user from "./Navbar"
 
+var user = ""
+if (localStorage.getItem("user") != null){
+  user = JSON.parse(localStorage.getItem("user"))
+}
 
 function Project(props){
 
@@ -29,16 +32,21 @@ function Project(props){
 
     const [category, setCategory] = useState([]);
 
+    const [members, setMembers] = useState([]);
+
+    const [sections, setSections] = useState([]);
+
+    const [role, setRole] = useState([]);
+
     const link = useParams()
 
-    console.log(link["id"])
+    // console.log(link["id"])
 
 
     async function Get_project(){
         await fetch("/api/projects/"+link["id"])
         .then(response => response.json())
         .then(data => {
-
             setCategory(data.category)
             setDescription(data.description)
             setName(data.name)
@@ -47,34 +55,99 @@ function Project(props){
             setVisibility(data.visibility)
             setOwnerId(data.owner_id)
             setCreatedAt(data.created_at)
-
-            console.log("dfghy")
-
-            console.log(category +"\n"+
-                        description+"\n"+
-                        name+"\n"+
-                        sourceLang+"\n"+
-                        targetLang+"\n"+
-                        visibility)
-
-
-
         }).catch(error => console.log(error))
         
     }
 
 
+    async function Get_members(){
+        var jsx_list = []
+        let jopa
+        await fetch("/api/projects/"+link["id"]+"/members")
+            .then(response => response.json())
+            .then(data => {jopa = data})
+
+        jopa.forEach(async elem => {
+            await fetch("/api/users/"+ elem.member_id)
+                .then(response => response.json())
+                .then(d => {
+                    jsx_list.push(
+                        <tr className="table-light">
+                            <th scope="row">{d.username}</th>
+                            <td>{elem.role_name}</td>
+                        </tr>
+                    )
+                    setMembers(jsx_list)
+                })
+        })
+    }
+
+    async function Get_sections(){
+        let sections_jsx = []
+        console.log("suka rabotai")
+        await fetch("/api/projects/"+link["id"]+"/sections")
+            .then(response => {console.log("Che za huita")
+            console.log(response)
+            return response.json()})
+            .then(data => {
+                console.log("ebat' zarabotalo")
+                console.log(data)
+                let count = 1
+                data.forEach(async elem =>
+                    {
+                        console.log("ahui")
+                        console.log(elem)
+                        sections_jsx.push(
+                            <tr>
+                                <th scope="row">{count}</th>
+                                <td>
+                                    <Link to="/editor" className="link-primary">
+                                        {elem.name}
+                                    </Link>
+                                </td>
+                                <td>50 / 100 (50%)</td>
+                                <td>Оригинал / Переведено</td>
+                            </tr>
+                        )
+                        count++
+                    })
+                setSections(sections_jsx)
+            })
+    }
+    async function Get_user_role(){
+        console.log(user.id)
+        await fetch("api/projects/"+ link["id"] + "/members/"+ user.id, {
+            method: "GET",
+            credentials:"include"
+        })
+        .then(response => response.body)
+        .then(data => {
+            console.log("big kucha")
+            console.log(data)
+        })
+    }
+
     useEffect(() => {
         Get_project();
     }, []);
 
-    
+    useEffect(() => {
+        Get_members();
+    }, []);
+
+    useEffect(() => {
+        Get_sections();
+    }, []);
+
+    useEffect(() => {
+        Get_user_role();
+    }, []);
+
     return (
     <>
         <Navbar/>
         <div className="container" style={{ marginTop: 50 }}>
         <h1 style={{marginTop: '20px', marginBottom: '20px'}}>{name}</h1>
-            {/* вкладочки */}
             <Tabs
             defaultActiveKey="project"
             id="project-id-tabs"
@@ -89,9 +162,10 @@ function Project(props){
                         </div>
                         <div className="col border-top border-start rounded py-3" style={{marginTop: '5px', marginLeft: '0px', marginRight: '20px', paddingLeft: '20px'}}>
                             <h3 className="py-2 border-bottom" style={{marginTop: '-10px'}}>Информация</h3>
-                            <div className="py-2 border-bottom" style={{marginTop: '-8px'}}><a><b>Перевод:</b> с {sourceLang} на {targetLang}</a></div>
+                            <div className="py-2 border-bottom" style={{marginTop: '-8px'}}><a><b>Оригинал перевода:</b> {sourceLang}</a></div> 
+                            <div className="py-2 border-bottom" style={{marginTop: '-8px'}}><a><b>Перевод на:</b> {targetLang}</a></div>
                             <div className="py-2 border-bottom"><a><b>Дата создания:</b> {creaetedAt}</a></div>
-                            <div className="py-2 border-bottom"><a><b>Статус:</b> открыт</a></div>
+                            <div className="py-2 border-bottom"><a><b>Статус:</b> {status}</a></div>
                             <div className="py-2 border-bottom"><a><b>Прогресс:</b>
                                 <div className="progress-stacked" style={{margin: '10px 0px 5px 0px'}}>
                                 <div className="progress" role="progressbar" aria-label="Переведено" style={{width: '15%'}} aria-valuenow={15} aria-valuemin={0} aria-valuemax={100}>
@@ -106,20 +180,14 @@ function Project(props){
                             <h3 className="py-2 border-bottom" style={{marginTop: '5px'}}>Модераторы</h3>
                             <table className="table table-hover">
                             <thead>
+                            
                                 <tr>
                                 <th scope="col">Ник</th>
                                 <th scope="col">Роль</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr className="table-light">
-                                <th scope="row">LazyDesman</th>
-                                <td>Владелец</td>
-                                </tr>
-                                <tr className="table-light">
-                                <th scope="row">Ipaingo</th>
-                                <td>Модератор</td>
-                                </tr>
+                                {members}
                             </tbody>
                             </table>
                         </div>
@@ -135,38 +203,9 @@ function Project(props){
                         <th scope="col">Скачать</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                        <th scope="row">1</th>
-                        <td>
-                            <Link to="/editor" className="link-primary">
-                                Раздел 1.
-                            </Link>
-                        </td>
-                        <td>50 / 100 (50%)</td>
-                        <td>Оригинал / Переведено</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">2</th>
-                        <td>
-                            <Link to="/editor" className="link-primary">
-                                Раздел 2.
-                            </Link>
-                        </td>
-                        <td>1 / 100 (1%)</td>
-                        <td>Оригинал / Переведено</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">3</th>
-                        <td>
-                            <Link to="/editor" className="link-primary">
-                                Раздел 3.
-                            </Link>
-                        </td>
-                        <td>0 / 100 (0%)</td>
-                        <td>Оригинал / Переведено</td>
-                        </tr>
-                    </tbody>
+                        <tbody>
+                            {sections}
+                        </tbody>
                     </table>
                 </Tab>
                 <Tab eventKey="members" title="Участники">
