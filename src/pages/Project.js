@@ -25,6 +25,8 @@ function Project(props){
 
     const [ownerId, setOwnerId] = useState([]);
 
+    const [creaetedAt, setCreatedAt] = useState([]);
+
     const [category, setCategory] = useState([]);
 
     const link = useParams()
@@ -44,6 +46,7 @@ function Project(props){
             setTargetLang(data.target_lang)
             setVisibility(data.visibility)
             setOwnerId(data.owner_id)
+            setCreatedAt(data.created_at)
 
             console.log("dfghy")
 
@@ -82,20 +85,12 @@ function Project(props){
                         <div className="col-7">
                             <img src={placeholder} height={250} alt="project cover" style={{float: 'left', padding: '10px', margin: '10px 10px 0px 0px'}} className="border rounded" />
                             <h3>Описание проекта</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            <p>{description}</p>
                         </div>
                         <div className="col border-top border-start rounded py-3" style={{marginTop: '5px', marginLeft: '0px', marginRight: '20px', paddingLeft: '20px'}}>
                             <h3 className="py-2 border-bottom" style={{marginTop: '-10px'}}>Информация</h3>
-                            <div className="py-2 border-bottom" style={{marginTop: '-8px'}}><a><b>Перевод:</b> с английского на русский</a></div>
-                            <div className="py-2 border-bottom"><a><b>Дата создания:</b> 01.01.2023</a></div>
+                            <div className="py-2 border-bottom" style={{marginTop: '-8px'}}><a><b>Перевод:</b> с {sourceLang} на {targetLang}</a></div>
+                            <div className="py-2 border-bottom"><a><b>Дата создания:</b> {creaetedAt}</a></div>
                             <div className="py-2 border-bottom"><a><b>Статус:</b> открыт</a></div>
                             <div className="py-2 border-bottom"><a><b>Прогресс:</b>
                                 <div className="progress-stacked" style={{margin: '10px 0px 5px 0px'}}>

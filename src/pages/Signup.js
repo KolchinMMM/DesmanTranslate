@@ -17,7 +17,7 @@ export default function Signup(){
     async function Submit(event) {
         console.log(inputMail+inputLogin+inputPass+inputRepeatPass)
         event.preventDefault()
-        const jopa = await fetch("/api/register",
+        await fetch("/api/register",
         {
             method:"POST",
             body: JSON.stringify({
@@ -40,7 +40,7 @@ export default function Signup(){
                 console.log(error)
             }
         )
-        
+
         //console.log(await jopa.json())
     }
     
