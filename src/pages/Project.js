@@ -40,7 +40,6 @@ function Project(props){
 
     const link = useParams()
 
-    // console.log(link["id"])
 
 
     async function Get_project(){
@@ -84,19 +83,12 @@ function Project(props){
 
     async function Get_sections(){
         let sections_jsx = []
-        console.log("suka rabotai")
         await fetch("/api/projects/"+link["id"]+"/sections")
-            .then(response => {console.log("Che za huita")
-            console.log(response)
-            return response.json()})
+            .then(response => response.json())
             .then(data => {
-                console.log("ebat' zarabotalo")
-                console.log(data)
                 let count = 1
                 data.forEach(async elem =>
                     {
-                        console.log("ahui")
-                        console.log(elem)
                         sections_jsx.push(
                             <tr>
                                 <th scope="row">{count}</th>
@@ -115,15 +107,13 @@ function Project(props){
             })
     }
     async function Get_user_role(){
-        console.log(user.id)
-        await fetch("api/projects/"+ link["id"] + "/members/"+ user.id, {
+        await fetch("/api/projects/"+ link["id"] + "/members/"+ user.id, {
             method: "GET",
             credentials:"include"
         })
-        .then(response => response.body)
+        .then(response => response.json())
         .then(data => {
-            console.log("big kucha")
-            console.log(data)
+            setRole(data.role_name)
         })
     }
 
@@ -176,7 +166,7 @@ function Project(props){
                                 </div>
                                 </div>
                             </a></div><a>
-                            </a><div className="py-2 border-bottom"><a /><a><b>Ваша роль:</b> владелец</a></div>
+                            </a><div className="py-2 border-bottom"><a /><a><b>Ваша роль:</b> {role} </a></div>
                             <h3 className="py-2 border-bottom" style={{marginTop: '5px'}}>Модераторы</h3>
                             <table className="table table-hover">
                             <thead>
