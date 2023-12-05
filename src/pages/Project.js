@@ -93,7 +93,7 @@ function Project(props){
                             <tr>
                                 <th scope="row">{count}</th>
                                 <td>
-                                    <Link to="/editor" className="link-primary">
+                                    <Link to={"/editor/"+elem.id} className="link-primary">
                                         {elem.name}
                                     </Link>
                                 </td>

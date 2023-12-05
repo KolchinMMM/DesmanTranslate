@@ -27,7 +27,7 @@ function App() {
         <Route path="signup" element={ <Signup/> } />
         <Route path="project/:id" element={ <Project/> } />
         <Route path="create" element={ <Create/> } />
-        <Route path="editor" element={ <Editor/> } />
+        <Route path="editor/:id" element={ <Editor/> } />
         <Route path="notfound" element={ <Notfound/> } />
       </Routes>
     </div>
