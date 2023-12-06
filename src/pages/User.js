@@ -57,7 +57,7 @@ export default function User() {
 								<Row className="border rounded py-3 align-items-center" style={{marginTop: '5px'}}>
 									<Col className="text-left">
 										<strong>
-											<Link className="link-primary" to={"/project/"+elem}>{elem.name}</Link>
+											<Link className="link-primary" to={"/project/"+elem.handle}>{elem.name}</Link>
 										</strong> 
 										<br/> Роль: {data_role.role_name}
 									</Col>
