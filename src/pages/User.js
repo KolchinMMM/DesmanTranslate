@@ -17,8 +17,8 @@ if (localStorage.getItem("user") != null){
 export default function User() {
 
   const [projects, setProjects] = useState([]);
-
-
+  const [username, setUsername] = useState([]);
+  const [about, setAbout] = useState([]);
   const link = useParams()
   console.log(link["id"])
   
@@ -35,7 +35,6 @@ export default function User() {
 		let aboba = await fetch("/api/users/"+link["id"])
 		.then(response => response.json())
 		.then(data => data.projects)
-		console.log(aboba)
 
 		var count = aboba.length
 		var project_elems = []
@@ -50,20 +49,16 @@ export default function User() {
 						fetch("/api/projects/"+elem.id+"/members/"+link["id"])
 							.then(response => response.json())
 							.then(data_role => {
-								console.log("sss")
-								console.log(data_role.role_name)
-								console.log(elem.name)
 								arr_jsx.push(
 								<Row className="border rounded py-3 align-items-center" style={{marginTop: '5px'}}>
 									<Col className="text-left">
 										<strong>
-											<Link className="link-primary" to={"/project/"+elem.handle}>{elem.name}</Link>
+											<Link className="link-primary" to={"/projects/"+elem.handle}>{elem.name}</Link>
 										</strong> 
 										<br/> Роль: {data_role.role_name}
 									</Col>
 								</Row>
 								)
-								console.log("jopa")
 								c++
 								if (c==count)
 								setProjects(arr_jsx)
@@ -74,17 +69,34 @@ export default function User() {
 		})
 	}
 
-    useEffect(() => {
-      Get_projects();
-  }, []);
+	function Get_user_info(){
+		fetch("/api/users/"+link["id"])
+			.then(response => response.json())
+			.then(data => {
+				console.log("hui")
+				console.log(data)
+				setUsername(data.username)
+				var about = data.about
+				if (data.about == undefined){
+					about = "Пользователь еще не добавил описание"
+				}
+				setAbout(about)
+			})
+	}
 
+    useEffect(() => {
+      	Get_projects();
+  	}, []);
+  	useEffect(() => {
+		Get_user_info();
+	}, []);
 
   return (
   <>
     <Navbar/>
 	
     <div className="container" style={{marginTop: '50px'}}>
-      <h1 style={{marginTop: '20px', marginBottom: '20px'}}>Ник пользователя</h1>
+      <h1 style={{marginTop: '20px', marginBottom: '20px'}}>{username}</h1>
       
       <Tabs
       defaultActiveKey="user"
@@ -96,43 +108,15 @@ export default function User() {
         <Row>
         <Col md={5} className="border rounded" style={{marginLeft: '10px', padding: '10px'}}>
           <img src={placeholder} height={200} alt="project cover" style={{float: 'left', padding: '10px', margin: '0px 10px 0px 0px'}} className="border rounded" />
-          <h2>LazyDesman</h2>
-          <h3>id: 000001</h3>
+          <h3>id: {link["id"]}</h3>
           <h3>О вас</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <p>{about}</p>
         </Col>
         <Col className="py-3" style={{marginLeft: '10px', marginRight: '20px', paddingLeft: '20px'}}>
           <h2 style={{marginBottom: '20px'}}>Участие в проектах</h2>
           <Button variant="primary" style={{marginTop: '0px', marginBottom: '5px'}} onClick={routeChange}>Создать проект</Button>
           <div className="container text-left" style={{paddingBottom: '10px'}}>
 		  {projects}
-          {/* <Row className="border rounded py-3 align-items-center" style={{marginTop: '5px'}}>
-            <Col md="auto">
-            <img width={60} height={60} src={placeholder} alt="thumbnail" style={{marginRight: '10px'}} />
-            </Col>
-            <Col className="text-left">
-            <strong><Link className="link-primary" to="/project/:id">Название проекта</Link></strong> <br /> Роль: переводчик
-            </Col>
-          </Row>
-          <Row className="border rounded py-3 align-items-center" style={{marginTop: '5px'}}>
-            <Col md="auto">
-            <img width={60} height={60} src={placeholder} alt="thumbnail" style={{marginRight: '10px'}} />
-            </Col>
-            <Col className="text-left">
-            <strong><Link className="link-primary" to="/project/:id">Название проекта</Link></strong> <br /> Роль: переводчик
-            </Col>
-          </Row>
-          <Row className="border rounded py-3 align-items-center" style={{marginTop: '5px'}}>
-            <Col md="auto">
-            <img width={60} height={60} src={placeholder} alt="thumbnail" style={{marginRight: '10px'}} />
-            </Col>
-            <Col className="text-left">
-            <strong><Link className="link-primary" to="/project/:id">Название проекта</Link></strong> <br /> Роль: переводчик
-            </Col>
-          </Row> */}
           </div>
         </Col>
         </Row>

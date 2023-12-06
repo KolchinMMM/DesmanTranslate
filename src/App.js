@@ -25,7 +25,7 @@ function App() {
         <Route path="user" element={ <User/> } />
         <Route path="login" element={ <Login/> } />
         <Route path="signup" element={ <Signup/> } />
-        <Route path="project/:id" element={ <Project/> } />
+        <Route path="projects/:id" element={ <Project/> } />
         <Route path="create" element={ <Create/> } />
         <Route path="editor/:id" element={ <Editor/> } />
         <Route path="notfound" element={ <Notfound/> } />
