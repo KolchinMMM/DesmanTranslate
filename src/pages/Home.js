@@ -82,61 +82,7 @@ function Home() {
           <div className="col-6 text-left" style={{ paddingRight: "5%" }}>
             <h2>Недавние проекты:</h2>
             {projects}
-            {/* <div
-              className="container text-left border-bottom"
-              style={{ paddingBottom: 25 }}
-            >
-              <div
-                className="row border rounded py-3 align-items-center"
-                style={{ marginTop: 5 }}
-              >
-                <div className="col-2">
-                  <img
-                    width={60}
-                    height={60}
-                    src={placeholder}
-                    alt="thumbnail"
-                    style={{ marginRight: 10 }}
-                  />
-                </div>
-                <div className="col text-left">
-                  <a>
-                    <b />
-                  </a>
-                  <b>
-                    <Link to="/project" className="link-primary">
-                        Название проекта
-                    </Link>
-                  </b>{" "}
-                  <br /> Полезная информация
-                </div>
-              </div>
-              <div
-                className="row border rounded py-3 align-items-center"
-                style={{ marginTop: 5 }}
-              >
-                <div className="col-2">
-                  <img
-                    width={60}
-                    height={60}
-                    src={placeholder}
-                    alt="thumbnail"
-                    style={{ marginRight: 10 }}
-                  />
-                </div>
-                <div className="col text-left">
-                  <a>
-                    <b />
-                  </a>
-                  <b>
-                    <Link to="/project" className="link-primary">
-                        Название проекта
-                    </Link>
-                  </b>{" "}
-                  <br /> Полезная информация
-                </div>
-              </div>
-            </div> */}
+            
             <h2 style={{ marginTop: 20 }}>Популярные проекты:</h2>
             <div className="container text-left" style={{ paddingBottom: 10 }}>
               <div
