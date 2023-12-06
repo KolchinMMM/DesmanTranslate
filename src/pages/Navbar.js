@@ -19,7 +19,7 @@ function Navbar(){
         if (user != ""){
             setInput(<ul className="nav" style={{ display: "flex" }}>
                 <li className="nav-item">
-                    <Link to="/LK" className="nav-link link-body-emphasis px-2">
+                    <Link to={"/users/"+ user.id} className="nav-link link-body-emphasis px-2">
                         Id:{user.id}
                     </Link>
                 </li>

@@ -1,21 +1,88 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import placeholder from "../images/placeholder.png";
 import { Col, Button, Container, Row, Tab, Tabs } from "react-bootstrap";
 import { useNavigate } from "react-router-dom"
 
+import React, { useEffect, useState } from "react"
+
+var user = ""
+if (localStorage.getItem("user") != null){
+  user = JSON.parse(localStorage.getItem("user"))
+}
+
+
+
 export default function User() {
+
+  const [projects, setProjects] = useState([]);
+
+
+  const link = useParams()
+  console.log(link["id"])
+  
+  var flag_is_authorized = (user.id == link["id"])
 
   let navigate = useNavigate(); 
   const routeChange = () =>{ 
-  let path = '/Create'; 
-  navigate(path);
+	let path = '/create'; 
+	navigate(path);
   }
+
+	async function Get_projects(){
+		let arr_jsx = []
+		let aboba = await fetch("/api/users/"+link["id"])
+		.then(response => response.json())
+		.then(data => data.projects)
+		console.log(aboba)
+
+		var count = aboba.length
+		var project_elems = []
+		aboba.forEach(async elem=>{
+			await fetch("/api/projects/"+elem)
+				.then(response => response.json())
+				.then(data_project => {
+					project_elems.push(data_project)
+					var c = 0
+					if (project_elems.length == count){
+						project_elems.forEach(elem => {
+						fetch("/api/projects/"+elem.id+"/members/"+link["id"])
+							.then(response => response.json())
+							.then(data_role => {
+								console.log("sss")
+								console.log(data_role.role_name)
+								console.log(elem.name)
+								arr_jsx.push(
+								<Row className="border rounded py-3 align-items-center" style={{marginTop: '5px'}}>
+									<Col className="text-left">
+										<strong>
+											<Link className="link-primary" to={"/project/"+elem}>{elem.name}</Link>
+										</strong> 
+										<br/> Роль: {data_role.role_name}
+									</Col>
+								</Row>
+								)
+								console.log("jopa")
+								c++
+								if (c==count)
+								setProjects(arr_jsx)
+							})
+						})
+					}
+				})
+		})
+	}
+
+    useEffect(() => {
+      Get_projects();
+  }, []);
+
 
   return (
   <>
     <Navbar/>
+	
     <div className="container" style={{marginTop: '50px'}}>
       <h1 style={{marginTop: '20px', marginBottom: '20px'}}>Ник пользователя</h1>
       
@@ -41,7 +108,8 @@ export default function User() {
           <h2 style={{marginBottom: '20px'}}>Участие в проектах</h2>
           <Button variant="primary" style={{marginTop: '0px', marginBottom: '5px'}} onClick={routeChange}>Создать проект</Button>
           <div className="container text-left" style={{paddingBottom: '10px'}}>
-          <Row className="border rounded py-3 align-items-center" style={{marginTop: '5px'}}>
+		  {projects}
+          {/* <Row className="border rounded py-3 align-items-center" style={{marginTop: '5px'}}>
             <Col md="auto">
             <img width={60} height={60} src={placeholder} alt="thumbnail" style={{marginRight: '10px'}} />
             </Col>
@@ -64,7 +132,7 @@ export default function User() {
             <Col className="text-left">
             <strong><Link className="link-primary" to="/project/:id">Название проекта</Link></strong> <br /> Роль: переводчик
             </Col>
-          </Row>
+          </Row> */}
           </div>
         </Col>
         </Row>

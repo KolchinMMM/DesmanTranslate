@@ -29,6 +29,7 @@ function App() {
         <Route path="create" element={ <Create/> } />
         <Route path="editor/:id" element={ <Editor/> } />
         <Route path="notfound" element={ <Notfound/> } />
+        <Route path="users/:id" element={ <User/> } />
       </Routes>
     </div>
   )
