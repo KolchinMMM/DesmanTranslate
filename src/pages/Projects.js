@@ -18,6 +18,9 @@ function Projects(){
 
     const [projects2, setProjects2] = useState([]);
 
+    const [invites, setInvites] = useState([]);
+
+
     async function Get_projects(){
 		let arr_jsx1 = []
         let arr_jsx2 = []
@@ -80,11 +83,95 @@ function Projects(){
 	}
 
     function Get_invites(){
-
+        let arr_jsx = []
+        fetch("/api/invites")
+            .then(response => response.json())
+            .then(data =>{
+                console.log("huio")
+                if (data.user_id === user["id"]){
+                    var item =
+                    <div className="container text-left" style={{ paddingBottom: 10 }}>
+                        <div
+                        className="row border rounded py-3 align-items-center"
+                        style={{ marginTop: 5 }}
+                        >
+                        <div className="col-auto">
+                            <img
+                            width={60}
+                            height={60}
+                            src={placeholder}
+                            alt="thumbnail"
+                            style={{ marginRight: 10 }}
+                            />
+                        </div>
+                        <div className="col text-left">
+                            <a>
+                            <b />
+                            </a>
+                            <b>
+                            <a className="text-primary" href="#">
+                                Название проекта
+                            </a>
+                            </b>{" "}
+                            <br /> Вы были приглашены пользователем{" "}
+                            <a className="text-primary" href="#">
+                            Ipaingo
+                            </a>
+                            .
+                        </div>
+                        <div className="col-auto">
+                            <button
+                            type="button"
+                            className="btn btn-success"
+                            style={{
+                                padding: 5,
+                                margin: 2,
+                                marginLeft: 0,
+                                width: "100%"
+                            }}
+                            >
+                            Принять
+                            </button>
+                            <br />
+                            <button
+                            type="button"
+                            className="btn btn-danger"
+                            style={{
+                                padding: 5,
+                                margin: 2,
+                                marginLeft: 0,
+                                width: "100%"
+                            }}
+                            >
+                            Отклонить
+                            </button>
+                        </div>
+                        </div>
+                    </div>
+                }
+            })
     }
 
+    async function Get_user_by_id(id){
+        let username
+        await fetch("/api/users/"+id)
+            .then(response => response.json())
+            .then(data => {
+                username = data.username
+                
+            })
+        return username
+    }
+
+    Get_user_by_id("3")
+        .then((result) => console.log(result))
+
     useEffect(() => {
-        Get_projects();
+        Get_projects()
+    }, []);
+
+    useEffect(() => {
+        Get_invites()
     }, []);
 
     return (
