@@ -49,6 +49,7 @@ function Project(props){
 
 
     async function Get_project(){
+        console.log("/api/projects/"+link["id"])
         await fetch("/api/projects/"+link["id"])
         .then(response => response.json())
         .then(data => {
@@ -70,11 +71,13 @@ function Project(props){
     async function Get_members(){
         var jsx_list = []
         let jopa
+        console.log("/api/projects/"+link["id"]+"/members")
         await fetch("/api/projects/"+link["id"]+"/members")
             .then(response => response.json())
             .then(data => {jopa = data})
 
         jopa.forEach(async elem => {
+            console.log("/api/users/"+ elem.member_id)
             await fetch("/api/users/"+ elem.member_id)
                 .then(response => response.json())
                 .then(d => {
@@ -91,6 +94,7 @@ function Project(props){
 
     async function Get_sections(){
         let sections_jsx = []
+        console.log("/api/projects/"+link["id"]+"/sections")
         await fetch("/api/projects/"+link["id"]+"/sections")
             .then(response => response.json())
             .then(data => {
@@ -115,6 +119,7 @@ function Project(props){
             })
     }
     async function Get_user_role(){
+        console.log("/api/projects/"+ link["id"] + "/members/"+ user.id)
         await fetch("/api/projects/"+ link["id"] + "/members/"+ user.id, {
             method: "GET",
             credentials:"include"
@@ -133,7 +138,7 @@ function Project(props){
                     console.log("А нихуя!")
                 }
                 else{
-                    console.log(user_id)
+                    console.log("/api/projects/"+projectId+"/invites/")
                     fetch("/api/projects/"+projectId+"/invites/",
                     {
                         method:"POST",
@@ -151,7 +156,11 @@ function Project(props){
     async function Get_user_by_username(username){
         let id = ""
         await fetch("/api/users/")
-            .then(response => response.json())
+            .then(response => {
+                console.log("ya pidoras")
+                console.log(response)
+                return response.json()
+            })
             .then(data => {
                 data.forEach(user =>{
                     if (user.username === username) 

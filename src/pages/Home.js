@@ -17,6 +17,8 @@ console.log(user)
 function Home() {
   const [projects, setProjects] = useState([]);
 
+  const [recentProjects, setRecentProjects] = useState([]);
+
   function Fill_projects(){
     fetch("/api/projects")
     .then((response) => response.json())
@@ -43,12 +45,28 @@ function Home() {
 
 
                 let item = 
+                <div className="container text-left" style={{ paddingBottom: 10 }}>
+                <div
+                className="row border rounded py-3 align-items-center"
+                style={{ marginTop: 5 }}
+              >
+                <div className="col-2">
+                  <img
+                    width={60}
+                    height={60}
+                    src={placeholder}
+                    alt="thumbnail"
+                    style={{ marginRight: 10 }}
+                  />
+                </div>
                 <div className="col text-left">
                 
                   <Link to={"/projects/"+elem.handle} className="link-primary">
                   {elem.name}
                   </Link>
                 <br /> Полезная информация
+              </div>
+              </div>
               </div>
 
               answer.push(item)
@@ -60,11 +78,69 @@ function Home() {
 
     })
     .catch(error => console.warn(error));
-  
   }
+
+
+  async function Fill_recent_projects(){
+    await fetch("/api/projects")
+    .then((response) => response.json())
+    .then((responseData) => {
+      
+        responseData.sort(function(a, b) {
+          return a.created_at < b.created_at;
+        });
+        let count = 0
+        var answer = []
+        responseData.forEach(elem => {
+          if (count != 2){
+			count++
+            console.log("dfghjkljhgf")
+            console.log(elem)
+
+
+                let item = 
+				<div className="container text-left" style={{ paddingBottom: 10 }}>
+                <div
+                className="row border rounded py-3 align-items-center"
+                style={{ marginTop: 5 }}
+              >
+                <div className="col-2">
+                  <img
+                    width={60}
+                    height={60}
+                    src={placeholder}
+                    alt="thumbnail"
+                    style={{ marginRight: 10 }}
+                  />
+                </div>
+                <div className="col text-left">
+                
+                  <Link to={"/projects/"+elem.handle} className="link-primary">
+                  {elem.name}
+                  </Link>
+                <br /> Полезная информация
+              </div>
+              </div>
+			  </div>
+
+              answer.push(item)
+             // console.log(item)
+          }
+		  else 
+		  	setRecentProjects(answer)
+		  
+        })
+    })
+    .catch(error => console.warn(error));
+  }
+
 
   useEffect(() => {
     Fill_projects();
+  }, []);
+
+  useEffect(() => {
+    Fill_recent_projects();
   }, []);
 
 
@@ -84,83 +160,9 @@ function Home() {
             {projects}
             
             <h2 style={{ marginTop: 20 }}>Популярные проекты:</h2>
-            <div className="container text-left" style={{ paddingBottom: 10 }}>
-              <div
-                className="row border rounded py-3 align-items-center"
-                style={{ marginTop: 5 }}
-              >
-                <div className="col-2">
-                  <img
-                    width={60}
-                    height={60}
-                    src={placeholder}
-                    alt="thumbnail"
-                    style={{ marginRight: 10 }}
-                  />
-                </div>
-                <div className="col text-left">
-                  <a>
-                    <b />
-                  </a>
-                  <b>
-                    <Link to="/project" className="link-primary">
-                        Название проекта
-                    </Link>
-                  </b>{" "}
-                  <br /> Владелец проекта
-                </div>
-              </div>
-              <div
-                className="row border rounded py-3 align-items-center"
-                style={{ marginTop: 5 }}
-              >
-                <div className="col-2">
-                  <img
-                    width={60}
-                    height={60}
-                    src={placeholder}
-                    alt="thumbnail"
-                    style={{ marginRight: 10 }}
-                  />
-                </div>
-                <div className="col text-left">
-                  <a>
-                    <b />
-                  </a>
-                  <b>
-                    <Link to="/project" className="link-primary">
-                        Название проекта
-                    </Link>
-                  </b>{" "}
-                  <br /> Владелец проекта
-                </div>
-              </div>
-              <div
-                className="row border rounded py-3 align-items-center"
-                style={{ marginTop: 5 }}
-              >
-                <div className="col-2">
-                  <img
-                    width={60}
-                    height={60}
-                    src={placeholder}
-                    alt="thumbnail"
-                    style={{ marginRight: 10 }}
-                  />
-                </div>
-                <div className="col text-left">
-                  <a>
-                    <b />
-                  </a>
-                  <b>
-                    <Link to="/project" className="link-primary">
-                        Название проекта
-                    </Link>
-                  </b>{" "}
-                  <br /> Владелец проекта
-                </div>
-              </div>
-            </div>
+            {recentProjects}
+            
+
           </div>
           <div
             className="col border-top border-start rounded py-3"
