@@ -14,6 +14,8 @@ if (localStorage.getItem("user") != null){
 
 function Project(props){
 
+    const [projectId, setProjectId] = useState([]);
+
     const [name, setName] = useState([]);
 
     const [sourceLang, setSourceLang] = useState([]);
@@ -38,6 +40,10 @@ function Project(props){
 
     const [role, setRole] = useState([]);
 
+    const [fieldInviteUser, setFieldInviteUser] = useState([]);
+
+    const fieldInviteUserChange = event => setFieldInviteUser(event.target.value);
+
     const link = useParams()
 
 
@@ -54,6 +60,8 @@ function Project(props){
             setVisibility(data.visibility)
             setOwnerId(data.owner_id)
             setCreatedAt(data.created_at)
+            setProjectId(data.id)
+            
         }).catch(error => console.log(error))
         
     }
@@ -115,6 +123,45 @@ function Project(props){
         .then(data => {
             setRole(data.role_name)
         })
+    }
+
+    function Send_invite(){
+        Get_user_by_username(fieldInviteUser)
+            .then( user_id =>{
+                if (user_id === "-1")
+                {
+                    console.log("А нихуя!")
+                }
+                else{
+                    console.log(user_id)
+                    fetch("/api/projects/"+projectId+"/invites/",
+                    {
+                        method:"POST",
+                        body: JSON.stringify({
+                            "user_id":user_id
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json; charset=UTF-8',
+                        }
+                    })
+                }
+            })
+    }
+
+    async function Get_user_by_username(username){
+        let id = ""
+        await fetch("/api/users/")
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(user =>{
+                    if (user.username === username) 
+                    {
+                        id = user.id
+                    }
+                })
+            })
+        if (id === "") return "-1"
+        return id
     }
 
     useEffect(() => {
@@ -248,9 +295,9 @@ function Project(props){
                         <div className="col border-top border-start rounded py-3" style={{marginTop: '5px', marginLeft: '0px', marginRight: '20px', paddingLeft: '20px'}}>
                             <h3 className="py-2 border-bottom" style={{marginTop: '-5px'}}>Пригласить участника</h3>
                             <form role="invite" style={{marginTop: '10px'}}>
-                            <input className="form-control" placeholder="Введите ник пользователя" aria-label="Invite" />
+                            <input className="form-control" placeholder="Введите ник пользователя" aria-label="Invite" onChange={fieldInviteUserChange} />
                             </form>
-                            <button type="button" className="btn btn-primary" style={{marginTop: '10px', marginBottom: '5px'}}>Пригласить</button>
+                            <button type="button" className="btn btn-primary" style={{marginTop: '10px', marginBottom: '5px'}} onClick={function(e){Send_invite()}}>Пригласить</button>
                         </div>
                     </div>
                 </Tab>
