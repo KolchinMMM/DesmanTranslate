@@ -45,7 +45,7 @@ function Home() {
                 let item = 
                 <div className="col text-left">
                 
-                  <Link to={"/project/"+elem.handle} className="link-primary">
+                  <Link to={"/projects/"+elem.handle} className="link-primary">
                   {elem.name}
                   </Link>
                 <br /> Полезная информация
