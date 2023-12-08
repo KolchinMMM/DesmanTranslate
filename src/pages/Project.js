@@ -128,6 +128,7 @@ function Project(props){
         .then(data => {
             setRole(data.role_name)
         })
+        .catch("ti ahuel")
     }
 
     function Send_invite(){
