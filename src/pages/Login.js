@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import Button from "react-bootstrap/Button";
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom";
 
@@ -99,10 +100,10 @@ export default function Login(){
                         Запомнить аккаунт
                     </label>
                     </div>
-                    {errorVisibility && <div id="error">Неверный пароль!!!</div>}
-                    <button type="submit" className="btn btn-primary" onClick={Submit}>
+                    {errorVisibility && <div id="error" style={{margin: "5px 0px"}}>Неверный логин или пароль.</div>}
+                    <Button type="submit" variant="primary" onClick={Submit}>
                     Войти
-                    </button>
+                    </Button>
                 </form>
                 </div>
             <Footer/>

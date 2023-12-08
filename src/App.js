@@ -11,6 +11,7 @@ import Project from './pages/Project.js';
 import Create from './pages/Create.js';
 import Editor from './pages/Editor.js';
 import Notfound from './pages/Error.js';
+import Load from './pages/Load.js';
 
 const api_link = "127.0.0.1:3000"
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="editor/:id" element={ <Editor/> } />
         <Route path="notfound" element={ <Notfound/> } />
         <Route path="users/:id" element={ <User/> } />
+        <Route path="load" element={ <Load/> } />
       </Routes>
     </div>
   )
