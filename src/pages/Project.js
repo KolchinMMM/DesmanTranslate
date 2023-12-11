@@ -45,6 +45,7 @@ function Project(props){
     const fieldInviteUserChange = event => setFieldInviteUser(event.target.value);
 
     const link = useParams()
+    console.log("jopets", link["id"])
 
 
 
@@ -52,7 +53,8 @@ function Project(props){
         console.log("/api/projects/"+link["id"])
         await fetch("/api/projects/"+link["id"])
         .then(response => response.json())
-        .then(data => {
+        .then(async data => {
+            setProjectId(data.id)
             setCategory(data.category)
             setDescription(data.description)
             setName(data.name)
@@ -61,12 +63,15 @@ function Project(props){
             setVisibility(data.visibility)
             setOwnerId(data.owner_id)
             setCreatedAt(data.created_at)
-            setProjectId(data.id)
-            
         }).catch(error => console.log(error))
         
     }
 
+    useEffect(() => {
+        Get_project();
+    }, []);
+    
+    Get_project()
 
     async function Get_members(){
         var jsx_list = []
@@ -99,13 +104,14 @@ function Project(props){
             .then(response => response.json())
             .then(data => {
                 let count = 1
+                console.log('jopa'+projectId)
                 data.forEach(async elem =>
                     {
                         sections_jsx.push(
                             <tr>
                                 <th scope="row">{count}</th>
                                 <td>
-                                    <Link to={"/editor/"+elem.id} className="link-primary">
+                                    <Link to={"/project/"+projectId + "/" + elem.id} className="link-primary">
                                         {elem.name}
                                     </Link>
                                 </td>
@@ -154,6 +160,8 @@ function Project(props){
             })
     }
 
+    console.log(projectId)
+
     async function Get_user_by_username(username){
         let id = ""
         await fetch("/api/users/")
@@ -174,20 +182,19 @@ function Project(props){
         return id
     }
 
-    useEffect(() => {
-        Get_project();
-    }, []);
 
     useEffect(() => {
         Get_members();
     }, []);
 
-    useEffect(() => {
-        Get_sections();
-    }, []);
+    
 
     useEffect(() => {
         Get_user_role();
+    }, []);
+
+    useEffect(() => {
+        Get_sections();
     }, []);
 
     return (

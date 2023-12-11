@@ -28,7 +28,7 @@ function App() {
         <Route path="signup" element={ <Signup/> } />
         <Route path="projects/:id" element={ <Project/> } />
         <Route path="create" element={ <Create/> } />
-        <Route path="editor/:id" element={ <Editor/> } />
+        <Route path="projects/:project_id/sections/:section_id" element={ <Editor/> } />
         <Route path="notfound" element={ <Notfound/> } />
         <Route path="users/:id" element={ <User/> } />
         <Route path="load" element={ <Load/> } />
