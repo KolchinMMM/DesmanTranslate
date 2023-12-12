@@ -105,13 +105,13 @@ function Project(props){
             .then(data => {
                 let count = 1
                 console.log('jopa'+projectId)
-                data.forEach(async elem =>
+                for (const elem of data)
                     {
                         sections_jsx.push(
                             <tr>
                                 <th scope="row">{count}</th>
                                 <td>
-                                    <Link to={"/project/"+projectId + "/" + elem.id} className="link-primary">
+                                    <Link to={"/projects/"+projectId + "/sections/" + elem.id} className="link-primary">
                                         {elem.name}
                                     </Link>
                                 </td>
@@ -120,7 +120,7 @@ function Project(props){
                             </tr>
                         )
                         count++
-                    })
+                    }
                 setSections(sections_jsx)
             })
     }

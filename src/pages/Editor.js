@@ -9,6 +9,7 @@ import { FaCog, FaFilter, FaBookOpen, FaEyeSlash, FaPlus, FaCheck, FaCode, FaReg
 import { BsReplyFill, BsChatLeftText, BsGlobe } from "react-icons/bs"
 import { Link, useParams } from "react-router-dom";
 
+
 import React, { setState, useEffect, useState, formData } from "react"
 import { OverlayTrigger, Tooltip } from "react-bootstrap"
 
@@ -84,6 +85,12 @@ export default function Editor(){
 
 	const [sections, setSections] = useState([]);
 
+	const [translations, setTranslations] = useState([]);
+
+	useEffect(() => {
+		console.log(translations)
+	  }, [translations])
+
 	const link = useParams()
 
 	console.log(link["project_id"], link["section_id"])
@@ -93,8 +100,50 @@ export default function Editor(){
 		navigate(path);
 	}
 
-	function Piece1(text, translation){
-		console.log("ooooo blya", text, translation)
+	function Translation1(username, text){
+		console.log(username, text)
+		return(
+		<>
+			<FloatingLabel controlId="translationVariant" label={username}>
+			<Form.Control
+				as="textarea"
+				readOnly
+				style={{ marginTop: "10px", minHeight: "100px", wordWrap: "break-word" }}
+			>
+				{text}
+			</Form.Control>
+			</FloatingLabel>
+		</>
+		)
+	}
+
+	async function Get_string(idString){
+		let arr_jsx = []
+		console.log(idString)
+		
+		console.log("pokak", idString)
+		await fetch("/api/projects/" + link["project_id"]+"/sections/"+link["section_id"]+"/strings/"+idString+"/translations")
+		.then(response => response.json())
+			.then(translat => {
+				for (const elem of translat){
+					console.log("nasral")
+					console.log(elem)
+					fetch("/api/users/"+elem.author_id)
+						.then(response => response.json())
+						.then(userishe => {
+							var item = Translation1(userishe.username, elem.text)
+							arr_jsx.push(item)
+						})
+				}
+			}).then(async ()=>{
+				console.log(arr_jsx)
+				setTranslations(arr_jsx)
+			})
+		
+	}
+	
+
+	function Piece1(text, translation, id_string){
 		return(
 		<>
 			<Container fluid style={{margin: "0px", padding: "7px", minHeight: "100px"}} className="py-2 d-flex justify-content-between">
@@ -105,7 +154,11 @@ export default function Editor(){
 				</Form.Group>        
 				</Form>
 			</Col>
-			<Col style={{marginRight: "10px"}} onClick={() => console.log('hello')}>
+			<Col style={{marginRight: "10px"}} onClick={async (e) => 
+					{
+						Get_string(id_string)
+					}
+				}>
 				<Form.Control className="d-flex align-items-start"
 				readOnly
 				as="textarea"
@@ -136,35 +189,30 @@ export default function Editor(){
 			.then(async data_sections =>{
 				var count = 0
 				for (const elem of data_sections){
-					console.log(count, elem)
 					count++
-					console.log("/api/projects/" + link["project_id"]+"/sections/"+link["section_id"]+"/strings/"+ elem.id+"/translations")
 					await fetch("/api/projects/" + link["project_id"]+"/sections/"+link["section_id"]+"/strings/"+ elem.id+"/translations")
 						.then(response => response.json())
 						.then(translations => {
-							console.log("transl" + elem.id)
-							console.log(translations)
 							let item
 							if (translations.length === 0){
-								item = Piece1(elem.text, "А где")
+								item = Piece1(elem.text, "А где", elem.id)
 
 							}else{
-								item = Piece1(elem.text, translations[0].text)
+								item = Piece1(elem.text, translations[0].text, elem.id)
 							}
 							arr_jsx.push(item)
 						})
 				}
 			})
 			.then(() =>{
-				console.log(arr_jsx)
 				setSections(arr_jsx)
 			}
 			)
 	}
 
 	useEffect(() => {
-        Get_strings();
-    }, []);
+        Get_strings()
+    }, [])
 
 	return (
 	<>
@@ -256,9 +304,8 @@ export default function Editor(){
 			</Form.Control>
 			
 			<h3>Варианты перевода</h3>
-			{Translation()}
-			{Translation()}
-			{Translation()}
+			{translations}
+			
 			
 
 		</Col>
