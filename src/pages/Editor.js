@@ -87,13 +87,22 @@ export default function Editor(){
 
 	const [translations, setTranslations] = useState([]);
 
+	const [idStr, setIdStr] = useState([]);
+
+    const [inputTranslation, setInputTranslation] = useState("");
+
+    const translationChange = event => setInputTranslation(event.target.value);
+
 	useEffect(() => {
 		console.log(translations)
 	  }, [translations])
 
 	const link = useParams()
 
-	console.log(link["project_id"], link["section_id"])
+	function refreshPage() {
+		window.location.reload(false);
+	  }
+
 	let navigate = useNavigate(); 
 	const routeChange = () =>{ 
 		let path = '/projects/'+link["project_id"]; 
@@ -101,7 +110,6 @@ export default function Editor(){
 	}
 
 	function Translation1(username, text){
-		console.log(username, text)
 		return(
 		<>
 			<FloatingLabel controlId="translationVariant" label={username}>
@@ -117,27 +125,42 @@ export default function Editor(){
 		)
 	}
 
+	
+
 	async function Get_string(idString){
 		let arr_jsx = []
 		console.log(idString)
-		
-		console.log("pokak", idString)
+		setIdStr(idString)
 		await fetch("/api/projects/" + link["project_id"]+"/sections/"+link["section_id"]+"/strings/"+idString+"/translations")
 		.then(response => response.json())
-			.then(translat => {
+			.then(async translat => {
+				setTranslations([])
+				const count = translat.length
+				let index = 0
+				
 				for (const elem of translat){
-					console.log("nasral")
-					console.log(elem)
-					fetch("/api/users/"+elem.author_id)
+					index++
+					await fetch("/api/users/"+elem.author_id)
 						.then(response => response.json())
 						.then(userishe => {
-							var item = Translation1(userishe.username, elem.text)
+							var item = <>
+								<FloatingLabel controlId="translationVariant" label={userishe.username}>
+								<Form.Control
+									as="textarea"
+									readOnly
+									style={{ marginTop: "10px", minHeight: "100px", wordWrap: "break-word" }}
+								>
+									{elem.text}
+								</Form.Control>
+								</FloatingLabel>
+							</>
 							arr_jsx.push(item)
 						})
 				}
-			}).then(async ()=>{
+			}).then(()=>{
 				console.log(arr_jsx)
-				setTranslations(arr_jsx)
+				console.log(translations)
+				setTranslations([...arr_jsx.reverse()])
 			})
 		
 	}
@@ -188,6 +211,7 @@ export default function Editor(){
 			.then(response => response.json())
 			.then(async data_sections =>{
 				var count = 0
+				setSections([])
 				for (const elem of data_sections){
 					count++
 					await fetch("/api/projects/" + link["project_id"]+"/sections/"+link["section_id"]+"/strings/"+ elem.id+"/translations")
@@ -198,7 +222,7 @@ export default function Editor(){
 								item = Piece1(elem.text, "А где", elem.id)
 
 							}else{
-								item = Piece1(elem.text, translations[0].text, elem.id)
+								item = Piece1(elem.text, translations.reverse()[0].text, elem.id)
 							}
 							arr_jsx.push(item)
 						})
@@ -209,10 +233,37 @@ export default function Editor(){
 			}
 			)
 	}
-
 	useEffect(() => {
         Get_strings()
     }, [])
+
+	async function Add_translation(){
+		console.log(idStr, inputTranslation)
+		await fetch("/api/projects/" + link["project_id"]+"/sections/"+link["section_id"]+"/strings/"+idStr+"/translations",
+		{
+			method:"POST",
+			body: JSON.stringify({
+				"text": inputTranslation
+				}),
+				headers: {
+				'Content-Type': 'application/json; charset=UTF-8',
+			},
+			credentials:"include",
+		}).then( response => {
+            if (!response.ok) { 
+                console.log("zaebeatles")
+            }
+            else return response.json()
+        }).then( async data=>{
+			console.log(data)
+			Get_strings()
+			Get_string(idStr)
+			
+			
+		})
+	}
+
+	
 
 	return (
 	<>
@@ -295,8 +346,9 @@ export default function Editor(){
 			
 		</Col>
 		<Col className="border-start border-end border-bottom" md={4}>
-			<Button variant="outline-success" style={{margin: "10px 0px 10px 0px"}}><FaPlus style={{marginBottom: "3px", marginRight: "3px"}}/>  Добавить перевод </Button>
+			<Button variant="outline-success" style={{margin: "10px 0px 10px 0px"}} onClick={() => Add_translation()}><FaPlus style={{marginBottom: "3px", marginRight: "3px"}}/>  Добавить перевод </Button>
 			<Form.Control className="d-flex align-items-start"
+			onChange={translationChange}
 			as="textarea"
 			placeholder="Ваш вариант перевода..."
 			style={{ marginBottom: "10px", paddingTop: "5px", paddingLeft: "10px", minHeight: "85px", wordWrap: "break-word" }}
