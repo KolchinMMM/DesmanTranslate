@@ -19,19 +19,19 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={ <Home/> } />
-        <Route path="about" element={ <About/> } />
-        <Route path="projects" element={ <Projects/> } />
-        <Route path="search" element={ <Search/> } />
-        <Route path="user" element={ <User/> } />
-        <Route path="login" element={ <Login/> } />
-        <Route path="signup" element={ <Signup/> } />
-        <Route path="projects/:id" element={ <Project/> } />
-        <Route path="create" element={ <Create/> } />
-        <Route path="projects/:project_id/sections/:section_id" element={ <Editor/> } />
-        <Route path="notfound" element={ <Notfound/> } />
-        <Route path="users/:id" element={ <User/> } />
-        <Route path="load" element={ <Load/> } />
+        <Route path="/" element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="projects" element={<Projects />} />
+        <Route path="search" element={<Search />} />
+        <Route path="user" element={<User />} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="projects/:id" element={<Project />} />
+        <Route path="create" element={<Create />} />
+        <Route path="projects/:project_id/sections/:section_id" element={<Editor />} />
+        <Route path="notfound" element={<Notfound />} />
+        <Route path="users/:id" element={<User />} />
+        <Route path="load" element={<Load />} />
       </Routes>
     </div>
   )

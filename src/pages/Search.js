@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-function Search(){
-    return(
+function Search() {
+    return (
         <>
-            <Navbar/>
+            <Navbar />
             а где
-            <Footer/>
+            <Footer />
         </>
     );
 }

@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom"
 import api_link from "../App"
 
 var user = ""
-if (localStorage.getItem("user") != null){
+if (localStorage.getItem("user") != null) {
   user = JSON.parse(localStorage.getItem("user"))
 }
 console.log(user)
@@ -19,119 +19,119 @@ function Home() {
 
   const [recentProjects, setRecentProjects] = useState([]);
 
-  function Fill_projects(){
+  function Fill_projects() {
     fetch("/api/projects")
-    .then((response) => response.json())
-    .then((responseData) => {
-      if (user != ""){
+      .then((response) => response.json())
+      .then((responseData) => {
+        if (user != "") {
 
-        var answer = []
-        var user_projects = new Array()
-        responseData.forEach(elem =>{
-          if (elem.owner_id === user.id)
-            user_projects.push(elem)
-        })
-  
-        user_projects.sort(function(a, b) {
-          return a.created_at < b.created_at;
-        });
-  
-        let count = 0
-  
-        user_projects.forEach(elem => {
-          if (count != 2){
-            console.log("dfghjkljhgf")
-            console.log(elem)
+          var answer = []
+          var user_projects = new Array()
+          responseData.forEach(elem => {
+            if (elem.owner_id === user.id)
+              user_projects.push(elem)
+          })
+
+          user_projects.sort(function (a, b) {
+            return a.created_at < b.created_at;
+          });
+
+          let count = 0
+
+          user_projects.forEach(elem => {
+            if (count != 2) {
+              console.log("dfghjkljhgf")
+              console.log(elem)
 
 
-                let item = 
+              let item =
                 <div className="container text-left" style={{ paddingBottom: 10 }}>
-                <div
-                className="row border rounded py-3 align-items-center"
-                style={{ marginTop: 5 }}
-              >
-                <div className="col-2">
-                  <img
-                    width={60}
-                    height={60}
-                    src={placeholder}
-                    alt="thumbnail"
-                    style={{ marginRight: 10 }}
-                  />
+                  <div
+                    className="row border rounded py-3 align-items-center"
+                    style={{ marginTop: 5 }}
+                  >
+                    <div className="col-2">
+                      <img
+                        width={60}
+                        height={60}
+                        src={placeholder}
+                        alt="thumbnail"
+                        style={{ marginRight: 10 }}
+                      />
+                    </div>
+                    <div className="col text-left">
+
+                      <Link to={"/projects/" + elem.handle} className="link-primary">
+                        {elem.name}
+                      </Link>
+                      <br /> Полезная информация
+                    </div>
+                  </div>
                 </div>
-                <div className="col text-left">
-                
-                  <Link to={"/projects/"+elem.handle} className="link-primary">
-                  {elem.name}
-                  </Link>
-                <br /> Полезная информация
-              </div>
-              </div>
-              </div>
 
               answer.push(item)
-             // console.log(item)
-          }
-        })
-        setProjects(answer)
-      }
+              // console.log(item)
+            }
+          })
+          setProjects(answer)
+        }
 
-    })
-    .catch(error => console.warn(error));
+      })
+      .catch(error => console.warn(error));
   }
 
 
-  async function Fill_recent_projects(){
+  async function Fill_recent_projects() {
     await fetch("/api/projects")
-    .then((response) => response.json())
-    .then((responseData) => {
-      
-        responseData.sort(function(a, b) {
+      .then((response) => response.json())
+      .then((responseData) => {
+
+        responseData.sort(function (a, b) {
           return a.created_at < b.created_at;
         });
         let count = 0
         var answer = []
         responseData.forEach(elem => {
-          if (count != 2){
-			count++
+          if (count != 2) {
+            count++
             console.log("dfghjkljhgf")
             console.log(elem)
 
 
-                let item = 
-				<div className="container text-left" style={{ paddingBottom: 10 }}>
+            let item =
+              <div className="container text-left" style={{ paddingBottom: 10 }}>
                 <div
-                className="row border rounded py-3 align-items-center"
-                style={{ marginTop: 5 }}
-              >
-                <div className="col-2">
-                  <img
-                    width={60}
-                    height={60}
-                    src={placeholder}
-                    alt="thumbnail"
-                    style={{ marginRight: 10 }}
-                  />
-                </div>
-                <div className="col text-left">
-                
-                  <Link to={"/projects/"+elem.handle} className="link-primary">
-                  {elem.name}
-                  </Link>
-                <br /> Полезная информация
-              </div>
-              </div>
-			  </div>
+                  className="row border rounded py-3 align-items-center"
+                  style={{ marginTop: 5 }}
+                >
+                  <div className="col-2">
+                    <img
+                      width={60}
+                      height={60}
+                      src={placeholder}
+                      alt="thumbnail"
+                      style={{ marginRight: 10 }}
+                    />
+                  </div>
+                  <div className="col text-left">
 
-              answer.push(item)
-             // console.log(item)
+                    <Link to={"/projects/" + elem.handle} className="link-primary">
+                      {elem.name}
+                    </Link>
+                    <br /> Полезная информация
+                  </div>
+                </div>
+              </div>
+
+            answer.push(item)
+            // console.log(item)
           }
-		  else 
-		  	setRecentProjects(answer)
-		  
+          else
+            setRecentProjects(answer)
+
         })
-    })
-    .catch(error => console.warn(error));
+      })
+      .catch(error => console.warn(error));
   }
 
 
@@ -144,13 +144,13 @@ function Home() {
   }, []);
 
 
-  let navigate = useNavigate(); 
-  const routeChange = () =>{ 
-    let path = '/create'; 
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = '/create';
     navigate(path);
   }
 
-  	return (
+  return (
     <>
       <Navbar />
       <div className="container" style={{ marginTop: 50 }}>
@@ -158,10 +158,10 @@ function Home() {
           <div className="col-6 text-left" style={{ paddingRight: "5%" }}>
             <h2>Недавние проекты:</h2>
             {projects}
-            
+
             <h2 style={{ marginTop: 20 }}>Популярные проекты:</h2>
             {recentProjects}
-            
+
 
           </div>
           <div
@@ -201,7 +201,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }

@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom";
 
-export default function Load(){
+export default function Load() {
     // const navigate = useNavigate();
 
     // const [inputMail, setInputMail] = useState("");
@@ -39,7 +39,7 @@ export default function Load(){
     //             'Content-Type': 'application/json; charset=UTF-8',
     //         },
     //         credentials:"include",
-            
+
     //     }).then( response => {
     //         if (!response.ok) { 
     //             toggle()
@@ -56,12 +56,12 @@ export default function Load(){
     //     })
     // }
 
-    
+
 
 
     return (
         <>
-            <Navbar/>
+            <Navbar />
             <div
                 className="container text-left"
                 style={{
@@ -71,14 +71,14 @@ export default function Load(){
                     width: "20%",
                     minWidth: 300
                 }}
-                >
+            >
                 <h1 style={{ marginBottom: 20 }}>Загрузить раздел</h1>
                 <Form>
                     <Form.Group className="mb-3">
                         <Form.Label htmlFor="inputChapterName" className="form-label">
                             Название раздела
                         </Form.Label>
-                        <Form.Control id="inputChapterName"/> {/*onChange={mailChange}*/}
+                        <Form.Control id="inputChapterName" /> {/*onChange={mailChange}*/}
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label htmlFor="inputChapterFile" className="form-label">
@@ -93,11 +93,11 @@ export default function Load(){
                     </Form.Group>
                     {/* {errorVisibility && <div id="error" style={{margin: "5px 0px"}}>Неверный логин или пароль.</div>} */}
                     <Button type="submit" variant="primary"> {/*onClick={Submit}*/}
-                    Загрузить
+                        Загрузить
                     </Button>
                 </Form>
-                </div>
-            <Footer/>
+            </div>
+            <Footer />
         </>
     );
 }
