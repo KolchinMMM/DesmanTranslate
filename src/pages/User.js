@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom"
 
 import React, { useEffect, useState } from "react"
 
-var user = ""
+let cur_user = ""
 if (localStorage.getItem("user") != null){
-  user = JSON.parse(localStorage.getItem("user"))
+  cur_user = JSON.parse(localStorage.getItem("user"))
 }
 
 
@@ -22,35 +22,36 @@ export default function User() {
   const link = useParams()
   console.log(link["id"])
   
-  var flag_is_authorized = (user.id == link["id"])
+  const flag_same_user = (cur_user.id == link["id"])
 
+  
   let navigate = useNavigate(); 
   const routeChange = () =>{ 
-	let path = '/create'; 
-	navigate(path);
+    let path = '/create'; 
+	  navigate(path);
   }
-
+  
 	async function Get_projects(){
-		let arr_jsx = []
+    let arr_jsx = []
 		let aboba = await fetch("/api/users/"+link["id"])
 		.then(response => response.json())
 		.then(data => data.projects)
-
-		var count = aboba.length
-		var project_elems = []
+    
+		let count = aboba.length
+		let project_elems = []
 		aboba.forEach(async elem=>{
-			await fetch("/api/projects/"+elem)
-				.then(response => response.json())
-				.then(data_project => {
-					project_elems.push(data_project)
-					var c = 0
-					if (project_elems.length == count){
-						project_elems.forEach(elem => {
-						fetch("/api/projects/"+elem.id+"/members/"+link["id"])
-							.then(response => response.json())
-							.then(data_role => {
-								arr_jsx.push(
-								<Row className="border rounded py-3 align-items-center" style={{marginTop: '5px'}}>
+      await fetch("/api/projects/"+elem)
+      .then(response => response.json())
+      .then(data_project => {
+        project_elems.push(data_project)
+        let c = 0
+        if (project_elems.length == count){
+          project_elems.forEach(elem => {
+            fetch("/api/projects/"+elem.id+"/members/"+link["id"])
+            .then(response => response.json())
+            .then(data_role => {
+              arr_jsx.push(
+                <Row className="border rounded py-3 align-items-center" style={{marginTop: '5px'}}>
 									<Col className="text-left">
 										<strong>
 											<Link className="link-primary" to={"/projects/"+elem.handle}>{elem.name}</Link>
@@ -62,34 +63,37 @@ export default function User() {
 								c++
 								if (c==count)
 								setProjects(arr_jsx)
-							})
-						})
-					}
-				})
+            })
+          })
+        }
+      })
 		})
 	}
 
-	function Get_user_info(){
-		fetch("/api/users/"+link["id"])
-			.then(response => response.json())
-			.then(data => {
-				console.log("hui")
-				console.log(data)
-				setUsername(data.username)
-				var about = data.about
-				if (data.about == undefined){
-					about = "Пользователь еще не добавил описание"
-				}
-				setAbout(about)
-			})
+  let user
+  
+	async function Get_user_info(){
+    return fetch("/api/users/"+link["id"])
+    .then(response => response.json())
+    .then(data => {
+      setUsername(data.username)
+      let about = data.about
+      if (data.about == undefined){
+        about = "Пользователь еще не добавил описание"
+      }
+      data.about = about
+      setAbout(about)
+      user = data
+    })
 	}
-
-    useEffect(() => {
-      	Get_projects();
-  	}, []);
-  	useEffect(() => {
-		Get_user_info();
-	}, []);
+  
+  useEffect(() => {
+    Get_projects();
+  }, []);
+  
+  useEffect(() => {
+    Get_user_info()
+  }, []);
 
   return (
   <>
@@ -108,7 +112,7 @@ export default function User() {
         <Row>
         <Col md={5} className="border rounded" style={{marginLeft: '10px', padding: '10px'}}>
           <img src={placeholder} height={200} alt="project cover" style={{float: 'left', padding: '10px', margin: '0px 10px 0px 0px'}} className="border rounded" />
-          <h3>id: {link["id"]}</h3>
+          <h3>{username}</h3>
           <h3>О вас</h3>
           <p>{about}</p>
         </Col>

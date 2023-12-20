@@ -20,8 +20,8 @@ function Navbar() {
 			setInput(
 				<ul className="nav" style={{ display: "flex" }}>
 					<li className="nav-item">
-						<Link to={"/users/" + user.id} className="nav-link link-primary px-2">
-							Id:{user.id}
+						<Link to={"/users/" + user.id} reloadDocu className="nav-link link-primary px-2">
+							{user.username}
 						</Link>
 					</li>
 					<Button
