@@ -132,7 +132,7 @@ export default function User() {
               <form className="row">
                 <label htmlFor="settings-user-id" className="form-label">Уникальный хэндл</label>
                 <div className="col-auto">
-                  <input type="text" className="form-control is-valid" id="settings-user-id" minLength={4} maxLength={100} defaultValue="LazyDesman" />
+                  <input type="text" className="form-control is-valid" id="settings-user-id" minLength={4} maxLength={100} defaultValue="lazy_desman" />
                   <div className="valid-feedback">Можно использовать!</div>
                   <div className="invalid-feedback">Такая ссылка уже занята!</div>
                 </div>
