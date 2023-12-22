@@ -341,7 +341,7 @@ function Project(props) {
                                         <option value="de">немецкий</option>
                                         <option value="fr">французский</option>
                                     </select>
-                                    <label htmlFor="settings-access" className="form-label" style={{ marginTop: '10px' }}>Язык перевода</label>
+                                    <label htmlFor="settings-access" className="form-label" style={{ marginTop: '10px' }}>Доступ к проекту</label>
                                     <div className="form-check">
                                         <input type="radio" name="radios" className="form-check-input" id="settings-access-private" defaultValue="private" defaultChecked />
                                         <label className="form-check-label" htmlFor="settings-access-private">Приватный проект</label>
