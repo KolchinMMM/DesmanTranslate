@@ -47,7 +47,6 @@ export default function Login() {
             }).then(data => {
                 if (typeof (data) != "undefined") {
                     console.log(typeof (data))
-                    localStorage.setItem("user", JSON.stringify(data))
                     console.log(data)
                     navigate("../")
                     window.location.reload(false);

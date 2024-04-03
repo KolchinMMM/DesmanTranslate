@@ -5,187 +5,108 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import placeholder from "../images/placeholder.png";
 
-import React, { useEffect, useState } from "react"
-
-var user = ""
-if (localStorage.getItem("user") != null) {
-    user = JSON.parse(localStorage.getItem("user"))
-}
+import { useEffect, useState, useContext } from "react"
+import { AuthContext } from "../AuthContext";
+import { fetchProject, fetchSections, fetchSomeAPI, fetchUser, fetchMembers } from "../APIController";
+import { ProgressBar } from "react-bootstrap";
 
 function Project(props) {
-    const [projectId, setProjectId] = useState([]);
-    const [name, setName] = useState([]);
-    const [sourceLang, setSourceLang] = useState([]);
-    const [targetLang, setTargetLang] = useState([]);
-    const [visibility, setVisibility] = useState([]);
-    const [status, setStatus] = useState([]);
-    const [description, setDescription] = useState([]);
-    const [ownerId, setOwnerId] = useState([]);
-    const [creaetedAt, setCreatedAt] = useState([]);
-    const [category, setCategory] = useState([]);
+
+    const { user } = useContext(AuthContext);
+
+    const [project, setProject] = useState({});
     const [members, setMembers] = useState([]);
     const [sections, setSections] = useState([]);
-    const [role, setRole] = useState([]);
+    const [roles, setRoles] = useState([]);
+    const [userRole, setUserRole] = useState(null);
+
+    const [progressCount, setProgressCount] = useState(0);
 
     const [fieldInviteUser, setFieldInviteUser] = useState([]);
 
     const fieldInviteUserChange = event => setFieldInviteUser(event.target.value);
 
     const link = useParams()
-    console.log("jopets", link["id"])
 
+    async function GetProject() {
+        try {
+            let project = await fetchProject(link["project_id"], true, true)
+            setProject(project)
+            setMembers(project.members)
+            setRoles(project.roles)
+        } catch (err) {
+            if (err.status == 404) {
+                window.location.replace("/404")
+            }
+        }
+    }
 
+    async function GetSections() {
+        try {
+            let sections = await fetchSections(link["project_id"])
+            setSections(sections)
+        } catch (err) {
 
-    async function Get_project() {
-        console.log("/api/projects/" + link["id"])
-        await fetch("/api/projects/" + link["id"])
-            .then(response => response.json())
-            .then(async data => {
-                setProjectId(data.id)
-                setCategory(data.category)
-                setDescription(data.description)
-                setName(data.name)
-                setSourceLang(data.source_lang)
-                setTargetLang(data.target_lang)
-                setVisibility(data.visibility)
-                setOwnerId(data.owner_id)
-                setCreatedAt(data.created_at)
-            }).catch(error => console.log(error))
+        }
+    }
 
+    async function GetUserRole() {
+        if (!user)
+            return
+        if (!members)
+            return
+
+        const member = members.find(member => member.user.id == user.id)
+        if (!member) {
+            setUserRole(null)
+            return
+        }
+
+        setUserRole(roles[member.role_id])
+    }
+
+    async function SendInvite() {
+        if (fieldInviteUser == "")
+            return
+        
+        try {
+            const user = await fetchUser(fieldInviteUser)
+            await fetchSomeAPI(`/api/projects/${project.id}/invites`, "POST", { user_id: user.id })
+        } catch (err) {
+            // TODO
+            // В зависимости от типа ошибки выводить то-то то-то на экране
+            console.log(err)
+        }
+    }
+
+    async function KickMember(user_id) {
+        try {
+            await fetchSomeAPI(`/api/projects/${link["project_id"]}/members/${user_id}`, "DELETE")
+            const members = await fetchMembers(link["project_id"])
+            setMembers(members)
+        } catch (err) {
+            console.log(err)
+            // По идее, тут ошибок со стороны сервера быть не должно.
+        }
     }
 
     useEffect(() => {
-        Get_project();
-    }, []);
-
-    Get_project()
-
-    async function Get_members() {
-        var jsx_list = []
-        let jopa
-        console.log("/api/projects/" + link["id"] + "/members")
-        await fetch("/api/projects/" + link["id"] + "/members")
-            .then(response => response.json())
-            .then(data => { jopa = data })
-
-        jopa.forEach(async elem => {
-            console.log("/api/users/" + elem.member_id)
-            await fetch("/api/users/" + elem.member_id)
-                .then(response => response.json())
-                .then(d => {
-                    jsx_list.push(
-                        <tr className="table-light">
-                            <th scope="row">{d.username}</th>
-                            <td>{elem.role_name}</td>
-                        </tr>
-                    )
-                    setMembers(jsx_list)
-                })
-        })
-    }
-
-    async function Get_sections() {
-        let sections_jsx = []
-        console.log("/api/projects/" + link["id"] + "/sections")
-        await fetch("/api/projects/" + link["id"] + "/sections")
-            .then(response => response.json())
-            .then(data => {
-                let count = 1
-                console.log('jopa' + projectId)
-                for (const elem of data) {
-                    sections_jsx.push(
-                        <tr>
-                            <th scope="row">{count}</th>
-                            <td>
-                                <Link to={"/projects/" + projectId + "/sections/" + elem.id} className="link-primary">
-                                    {elem.name}
-                                </Link>
-                            </td>
-                            <td>50 / 100 (50%)</td>
-                            <td>Оригинал / Переведено</td>
-                        </tr>
-                    )
-                    count++
-                }
-                setSections(sections_jsx)
-            })
-    }
-    async function Get_user_role() {
-        console.log("/api/projects/" + link["id"] + "/members/" + user.id)
-        await fetch("/api/projects/" + link["id"] + "/members/" + user.id, {
-            method: "GET",
-            credentials: "include"
-        })
-            .then(response => response.json())
-            .then(data => {
-                setRole(data.role_name)
-            })
-            .catch("ti ahuel")
-    }
-
-    function Send_invite() {
-        Get_user_by_username(fieldInviteUser)
-            .then(user_id => {
-                if (user_id === "-1") {
-                    console.log("А нихуя!")
-                }
-                else {
-                    console.log("/api/projects/" + projectId + "/invites/")
-                    fetch("/api/projects/" + projectId + "/invites/",
-                        {
-                            method: "POST",
-                            body: JSON.stringify({
-                                "user_id": user_id
-                            }),
-                            headers: {
-                                'Content-Type': 'application/json; charset=UTF-8',
-                            }
-                        })
-                }
-            })
-    }
-
-    console.log(projectId)
-
-    async function Get_user_by_username(username) {
-        let id = ""
-        await fetch("/api/users/")
-            .then(response => {
-                console.log("ya pidoras")
-                console.log(response)
-                return response.json()
-            })
-            .then(data => {
-                data.forEach(user => {
-                    if (user.username === username) {
-                        id = user.id
-                    }
-                })
-            })
-        if (id === "") return "-1"
-        return id
-    }
-
-
-    useEffect(() => {
-        Get_members();
-    }, []);
-
-
-
-    useEffect(() => {
-        Get_user_role();
+        GetProject();
     }, []);
 
     useEffect(() => {
-        Get_sections();
-    }, []);
+        GetUserRole();
+    }, [project, user]);
 
+    useEffect(() => {
+        GetSections();
+    }, []);
+    
     return (
         <>
             <Navbar />
             <div className="container" style={{ marginTop: 50 }}>
-                <h1 style={{ marginTop: '20px', marginBottom: '20px' }}>{name}</h1>
+                <h1 style={{ marginTop: '20px', marginBottom: '20px' }}>{project?.name}</h1>
                 <Tabs
                     defaultActiveKey="project"
                     id="project-id-tabs"
@@ -196,42 +117,49 @@ function Project(props) {
                             <div className="col-7">
                                 <img src={placeholder} height={250} alt="project cover" style={{ float: 'left', padding: '10px', margin: '10px 10px 0px 0px' }} className="border rounded" />
                                 <h3>Описание проекта</h3>
-                                <p>{description}</p>
+                                <p>{project?.description}</p>
                             </div>
                             <div className="col border-top border-start rounded py-3" style={{ marginTop: '5px', marginLeft: '0px', marginRight: '20px', paddingLeft: '20px' }}>
                                 <h3 className="py-2 border-bottom" style={{ marginTop: '-10px' }}>Информация</h3>
-                                <div className="py-2 border-bottom" style={{ marginTop: '-8px' }}><a><b>Оригинал перевода:</b> {sourceLang}</a></div>
-                                <div className="py-2 border-bottom" style={{ marginTop: '-8px' }}><a><b>Перевод на:</b> {targetLang}</a></div>
-                                <div className="py-2 border-bottom"><a><b>Дата создания:</b> {creaetedAt}</a></div>
-                                <div className="py-2 border-bottom"><a><b>Статус:</b> {status}</a></div>
-                                <div className="py-2 border-bottom"><a><b>Прогресс:</b>
+                                <div className="py-2 border-bottom" style={{ marginTop: '-8px' }}><b>Язык оригинала:</b> {project?.source_lang}</div>
+                                <div className="py-2 border-bottom" style={{ marginTop: '-8px' }}><b>Язык перевода:</b> {project?.target_lang}</div>
+                                <div className="py-2 border-bottom"><b>Дата создания:</b> {project?.created_at?.toLocaleString()}</div>
+                                <div className="py-2 border-bottom"><b>Статус:</b> {project?.status}</div>
+                                <div className="py-2 border-bottom"><b>Прогресс: {progressCount}%</b>
                                     <div className="progress-stacked" style={{ margin: '10px 0px 5px 0px' }}>
-                                        <div className="progress" role="progressbar" aria-label="Переведено" style={{ width: '15%' }} aria-valuenow={15} aria-valuemin={0} aria-valuemax={100}>
-                                            <div className="progress-bar">15%</div>
-                                        </div>
-                                        <div className="progress" role="progressbar" aria-label="Переводится" style={{ width: '40%' }} aria-valuenow={40} aria-valuemin={0} aria-valuemax={100}>
+                                        {/* <ProgressBar className="progress" style={{ width: '100%' }} aria-valuenow={100} aria-valuemin={0} aria-valuemax={100}>
                                             <div className="progress-bar progress-bar-striped progress-bar-animated bg-success">40%</div>
-                                        </div>
+                                        </ProgressBar> */}
+                                        <ProgressBar className="progress" striped animated label={`${progressCount}%`} style={{ width: progressCount + '%' }} aria-valuenow={progressCount} aria-valuemin={0} aria-valuemax={100}/>
                                     </div>
-                                </a></div><a>
-                                </a><div className="py-2 border-bottom"><a /><a><b>Ваша роль:</b> {role} </a></div>
-                                <h3 className="py-2 border-bottom" style={{ marginTop: '5px' }}>Модераторы</h3>
+                                </div>
+                                { userRole &&
+                                <div className="py-2 border-bottom"><b>Ваша роль:</b> {userRole?.name}</div>
+                                }
+                                {/* <h3 className="py-2 border-bottom" style={{ marginTop: '5px' }}>Участники</h3>
                                 <table className="table table-hover">
                                     <thead>
 
                                         <tr>
-                                            <th scope="col">Ник</th>
-                                            <th scope="col">Роль</th>
+                                            <th key="username" scope="col">Ник</th>
+                                            <th key="roles" scope="col">Роль</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {members}
+                                        {members.map((member) =>
+                                            <tr key={member.member_id.id} className="table-light">
+                                                <th scope="row">{member.member_id.username}</th>
+                                                <td>{member.role_name}</td>
+                                            </tr>
+                                        )}
                                     </tbody>
-                                </table>
+                                </table> */}
                             </div>
                         </div>
                         <h2>Разделы</h2>
-                        <button type="button" className="btn btn-primary" style={{ marginTop: '0px', marginBottom: '5px' }} onclick="location.href = 'addchapters.html';">Добавить раздел</button>
+                        {userRole && userRole.permissions.can_manage_sections && 
+                        <Link to={`/projects/${link["project_id"]}/addchapters.html`} type="button" className="btn btn-primary" style={{ marginTop: '0px', marginBottom: '5px' }}>Добавить раздел</Link>
+                        }
                         <table className="table table-striped">
                             <thead>
                                 <tr>
@@ -242,7 +170,18 @@ function Project(props) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {sections}
+                                {sections.map((section, index) =>
+                                    <tr key={section.id}>
+                                        <th scope="row">{index + 1}</th>
+                                        <td>
+                                            <Link to={"/projects/" + project?.id + "/sections/" + section.id} className="link-primary">
+                                                {section.name}
+                                            </Link>
+                                        </td>
+                                        <td>50 / 100 (50%)</td>
+                                        <td>Оригинал / Переведено</td>
+                                    </tr>
+                                )}
                             </tbody>
                         </table>
                     </Tab>
@@ -257,52 +196,36 @@ function Project(props) {
                                             <th scope="col">Ник</th>
                                             <th scope="col">Роль</th>
                                             <th scope="col">Рейтинг</th>
-                                            <th scope="col" style={{ display: 'inline-flexbox' }}>Модерация</th>
+                                            {/* <th scope="col" style={{ display: 'inline-flexbox' }}>Модерация</th> */}
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>LazyDesman</td>
-                                            <td>Владелец</td>
-                                            <td>30</td>
-                                            <td style={{ display: 'inline-flexbox' }}><button type="button" className="btn btn-outline-danger" style={{ padding: '0px 5px' }}>Исключить</button></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Ipaingo</td>
-                                            <td><select className="form-select" id="members-role-2" style={{ padding: '0px 5px', width: '80%' }} disabled>
-                                                <option value="member">Переводчик</option>
-                                                <option value="redactor">Редактор</option>
-                                                <option value="moderator" selected>Модератор</option>
-                                            </select></td>
-                                            <td>0</td>
-                                            <td style={{ display: 'inline-flexbox' }}><button type="button" className="btn btn-outline-danger" style={{ padding: '0px 5px' }}>Исключить</button></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Neprim</td>
-                                            <td><select className="form-select" id="members-role-3" style={{ padding: '0px 5px', width: '80%' }}>
-                                                <option value="member" selected>Переводчик</option>
-                                                <option value="redactor">Редактор</option>
-                                                <option value="moderator">Модератор</option>
-                                            </select></td>
-                                            <td>21</td>
-                                            <td style={{ display: 'inline-flexbox' }}><button type="button" className="btn btn-outline-danger" style={{ padding: '0px 5px' }}>Исключить</button></td>
-                                        </tr>
+                                        {members.map((member, index) =>
+                                            <tr key={member.user.id}>
+                                                <th scope="row">{index + 1}</th>
+                                                <td>{member.user.username}</td>
+                                                <td>{roles[member.role_id].name}</td>
+                                                <td>0</td>
+                                                {!roles[member.role_id].permissions.can_manage_members && userRole && userRole.permissions.can_manage_members &&
+                                                    <td style={{ display: 'inline-flexbox' }}><button type="button" className="btn btn-outline-danger" style={{ padding: '0px 5px' }} onClick={ function (e) { KickMember(member.user.id) } }>Исключить</button></td>
+                                                }
+                                            </tr>
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
+                            {userRole && userRole.permissions.can_manage_members &&
                             <div className="col border-top border-start rounded py-3" style={{ marginTop: '5px', marginLeft: '0px', marginRight: '20px', paddingLeft: '20px' }}>
                                 <h3 className="py-2 border-bottom" style={{ marginTop: '-5px' }}>Пригласить участника</h3>
-                                <form role="invite" style={{ marginTop: '10px' }}>
+                                <form style={{ marginTop: '10px' }}>
                                     <input className="form-control" placeholder="Введите ник пользователя" aria-label="Invite" onChange={fieldInviteUserChange} />
                                 </form>
-                                <button type="button" className="btn btn-primary" style={{ marginTop: '10px', marginBottom: '5px' }} onClick={function (e) { Send_invite() }}>Пригласить</button>
+                                <button type="button" className="btn btn-primary" style={{ marginTop: '10px', marginBottom: '5px' }} onClick={function (e) { SendInvite() }}>Пригласить</button>
                             </div>
+                            }
                         </div>
                     </Tab>
-                    <Tab eventKey="settings" title="Настройки">
+                    {/* <Tab eventKey="settings" title="Настройки">
                         <h2 style={{ marginTop: '20px', marginBottom: '20px' }}>Настройки проекта</h2>
                         <div className="row">
                             <div className="border rounded py-3" style={{ padding: '0px 20px', margin: '0px 20px' }}>
@@ -310,8 +233,6 @@ function Project(props) {
                                     <label htmlFor="settings-id" className="form-label">Уникальная ссылка</label>
                                     <div className="col-3">
                                         <input type="text" className="form-control is-valid" id="settings-id" minLength={4} maxLength={100} />
-                                        {/*div class="valid-feedback">Можно использовать!</div>
-                                        <div class="invalid-feedback">Такая ссылка уже занята!</div*/}
                                     </div>
                                     <div className="col">
                                         <button className="btn btn-primary" type="submit">Применить</button>
@@ -328,16 +249,16 @@ function Project(props) {
                                     <label htmlFor="settings-author" className="form-label" style={{ marginTop: '10px' }}>Владелец проекта</label>
                                     <input type="text" className="form-control" id="settings-author" defaultValue="Нынешний владелец" />
                                     <label htmlFor="settings-src-lang" className="form-label" style={{ marginTop: '10px' }}>Язык оригинала</label>
-                                    <select className="form-select" id="settings-src-lang">
-                                        <option value="ru" selected>русский</option>
+                                    <select className="form-select" defaultValue="en" id="settings-src-lang">
+                                        <option value="ru">русский</option>
                                         <option value="en">английский</option>
                                         <option value="de">немецкий</option>
                                         <option value="fr">французский</option>
                                     </select>
                                     <label htmlFor="settings-category" className="form-label" style={{ marginTop: '10px' }}>Язык перевода</label>
-                                    <select className="form-select" id="settings-category">
+                                    <select className="form-select" defaultValue="ru" id="settings-category">
                                         <option value="ru">русский</option>
-                                        <option value="en" selected>английский</option>
+                                        <option value="en">английский</option>
                                         <option value="de">немецкий</option>
                                         <option value="fr">французский</option>
                                     </select>
@@ -351,8 +272,8 @@ function Project(props) {
                                         <label className="form-check-label" htmlFor="settings-access-public">Публичный проект</label>
                                     </div>
                                     <label htmlFor="settings-category" className="form-label" style={{ marginTop: '10px' }}>Категория</label>
-                                    <select className="form-select" id="settings-category" aria-describedby="category-desc">
-                                        <option value="none" selected>Не выбрано</option>
+                                    <select className="form-select" defaultValue="none" id="settings-category" aria-describedby="category-desc">
+                                        <option value="none">Не выбрано</option>
                                         <option value="movie">Фильмы</option>
                                         <option value="text">Тексты</option>
                                         <option value="program">Программы</option>
@@ -381,7 +302,7 @@ function Project(props) {
                                 </form>
                             </div>
                         </div>
-                    </Tab>
+                    </Tab> */}
                 </Tabs>
             </div>
             <Footer />

@@ -3,10 +3,14 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import React, { useState } from "react"
+import { useEffect, useState, useContext } from "react"
+import { AuthContext } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Load() {
+
+    const { user } = useContext(AuthContext);
+
     // const navigate = useNavigate();
 
     // const [inputMail, setInputMail] = useState("");

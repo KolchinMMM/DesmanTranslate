@@ -30,9 +30,9 @@ export default function Signup() {
     const [inputLogin, setInputLogin] = useState("");
     const [inputPass, setInputPass] = useState("");
     const [inputRepeatPass, setInputRepeatPass] = useState("");
-    const [errorUsername, setErrorUsername] = useState("");
-    const [errorEmail, setErrorEmail] = useState("");
-    const [errorPassword, setErrorPassword] = useState("");
+    const [usernameError, setUsernameError] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
 
     const [users, setUsers] = useState([])
 
@@ -56,9 +56,9 @@ export default function Signup() {
 
             })
 
-        setErrorUsername("")
-        setErrorEmail("")
-        setErrorPassword("")
+        setUsernameError("")
+        setEmailError("")
+        setPasswordError("")
 
         const resp_json = await response.json()
         if (!response.ok) {
@@ -67,13 +67,13 @@ export default function Signup() {
             for (const error of errors) {
                 switch (error.key) {
                     case "email":
-                        setErrorEmail(errors_to_message.email[error.kind] || "Какая-то ошибка")
+                        setEmailError(errors_to_message.email[error.kind] || "Какая-то ошибка")
                         break;
                     case "username":
-                        setErrorUsername(errors_to_message.username[error.kind] || "Какая-то ошибка")
+                        setUsernameError(errors_to_message.username[error.kind] || "Какая-то ошибка")
                         break;
                     case "password":
-                        setErrorPassword(errors_to_message.password[error.kind] || "Какая-то ошибка")
+                        setPasswordError(errors_to_message.password[error.kind] || "Какая-то ошибка")
                         break;
                 }
             }
@@ -112,9 +112,9 @@ export default function Signup() {
                         <label htmlFor="inputEmail" className="form-label">
                             Электронная почта
                         </label>
-                        <input type="email" value={inputMail} className="form-control" id="inputEmail" onChange={mailChange} aria-describedby="errorEmail" />
-                        {errorEmail != "" && <div id="errorEmail" className="form-text">
-                            {errorEmail}
+                        <input type="email" value={inputMail} className="form-control" id="inputEmail" onChange={mailChange} aria-describedby="emailError" />
+                        {emailError != "" && <div id="emailError" className="form-text">
+                            {emailError}
                         </div>}
                     </div>
                     <div className="mb-3">
@@ -127,19 +127,19 @@ export default function Signup() {
                             value={inputLogin}
                             onChange={loginChange}
                             id="inputLogin"
-                            aria-describedby="errorUsername"
+                            aria-describedby="usernameError"
                         />
-                        {errorUsername != "" && <div id="errorUsername" className="form-text">
-                            {errorUsername}
+                        {usernameError != "" && <div id="usernameError" className="form-text">
+                            {usernameError}
                         </div>}
                     </div>
                     <div className="mb-3">
                         <label htmlFor="inputPassword" className="form-label">
                             Пароль
                         </label>
-                        <input type="password" value={inputPass} onChange={passChange} className="form-control" id="inputPassword" aria-describedby="errorPassword" />
-                        {errorPassword != "" && <div id="errorPassword" className="form-text">
-                            {errorPassword}
+                        <input type="password" value={inputPass} onChange={passChange} className="form-control" id="inputPassword" aria-describedby="passwordError" />
+                        {passwordError != "" && <div id="passwordError" className="form-text">
+                            {passwordError}
                         </div>}
                     </div>
                     {/* <div className="mb-3">

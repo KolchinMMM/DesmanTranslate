@@ -10,7 +10,8 @@ import { BsReplyFill, BsChatLeftText, BsGlobe } from "react-icons/bs"
 import { Link, useParams } from "react-router-dom";
 
 
-import React, { setState, useEffect, useState, formData } from "react"
+import React, { setState, useEffect, useState, formData, useContext } from "react"
+import { AuthContext } from "../AuthContext";
 import { OverlayTrigger, Tooltip } from "react-bootstrap"
 
 function LinkWithTooltip({ id, children, href, tooltip, where }) {
@@ -26,72 +27,28 @@ function LinkWithTooltip({ id, children, href, tooltip, where }) {
 	);
 }
 
-function Piece() {
-	return (
-		<>
-			<Container fluid style={{ margin: "0px", padding: "7px", minHeight: "100px" }} className="py-2 d-flex justify-content-between">
-				<Col md="auto" className="d-flex align-items-center" style={{ marginRight: "10px", marginTop: "20px" }}>
-					<Form className="d-flex align-items-center">
-						<Form.Group className="mb-3" controlId="formBasicCheckbox">
-							<Form.Check type="checkbox" />
-						</Form.Group>
-					</Form>
-				</Col>
-				<Col style={{ marginRight: "10px" }}>
-					<Form.Control className="d-flex align-items-start"
-						readOnly
-						as="textarea"
-						style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
-					>
-						aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-					</Form.Control>
-				</Col>
-				<Col>
-					<Form.Control className="d-flex align-items-start"
-						readOnly
-						as="textarea"
-						style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
-					>
-						Здесь отображается самый новый перевод. Пользователь может редактировать только свой перевод.
-					</Form.Control>
-				</Col>
-			</Container>
-		</>
-	)
-}
 
 
 
-
-
-
-function Translation() {
-	return (
-		<>
-			<FloatingLabel controlId="translationVariant" label="Ник пользователя">
-				<Form.Control
-					as="textarea"
-					readOnly
-					style={{ marginTop: "10px", minHeight: "100px", wordWrap: "break-word" }}
-				>
-					aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-				</Form.Control>
-			</FloatingLabel>
-		</>
-	)
-}
 
 export default function Editor() {
 
-	const [sections, setSections] = useState([]);
+	const { user } = useContext(AuthContext);
 
-	const [translations, setTranslations] = useState([]);
+	const [strings, setStrings] = useState([]);
 
-	const [idStr, setIdStr] = useState([]);
+	const [curString, setCurString] = useState(null)
+	const [curStringIndex, setCurStringIndex] = useState(-1)
+
+	const [translations, setCurTranslations] = useState([]);
 
 	const [inputTranslation, setInputTranslation] = useState("");
-
+	
 	const translationChange = event => setInputTranslation(event.target.value);
+
+	const [project, setProject] = useState({});
+	const [members, setMembers] = useState({});
+	const [roles, setRoles] = useState({});
 
 	useEffect(() => {
 		console.log(translations)
@@ -109,136 +66,61 @@ export default function Editor() {
 		navigate(path);
 	}
 
-	function Translation1(username, text) {
-		return (
-			<>
-				<FloatingLabel controlId="translationVariant" label={username}>
-					<Form.Control
-						as="textarea"
-						readOnly
-						style={{ marginTop: "10px", minHeight: "100px", wordWrap: "break-word" }}
-					>
-						{text}
-					</Form.Control>
-				</FloatingLabel>
-			</>
-		)
+
+	async function SelectString(str_index) {
+		setCurString(strings[str_index])
+		setCurStringIndex(str_index)
 	}
 
+	async function GetProject() {
+        const response = await fetch("/api/projects/" + link["project_id"] + "?fetch_members=1&fetch_roles=1")
+        if (!response.ok) {
+            window.location.replace("/404")
+            return
+        }
+        let project = await response.json()
+        project.created_at = new Date(project.created_at)
+        setProject(project)
+        setMembers(project.members)
+        setRoles(project.roles)
+        console.log("look project => ")
+        console.log(project)
+        console.log(project.members)
+    }
 
-
-	async function Get_string(idString) {
-		let arr_jsx = []
-		console.log(idString)
-		setIdStr(idString)
-		await fetch("/api/projects/" + link["project_id"] + "/sections/" + link["section_id"] + "/strings/" + idString + "/translations")
-			.then(response => response.json())
-			.then(async translat => {
-				setTranslations([])
-				const count = translat.length
-				let index = 0
-
-				for (const elem of translat) {
-					index++
-					await fetch("/api/users/" + elem.author_id)
-						.then(response => response.json())
-						.then(userishe => {
-							var item = <>
-								<FloatingLabel controlId="translationVariant" label={userishe.username}>
-									<Form.Control
-										as="textarea"
-										readOnly
-										style={{ marginTop: "10px", minHeight: "100px", wordWrap: "break-word" }}
-									>
-										{elem.text}
-									</Form.Control>
-								</FloatingLabel>
-							</>
-							arr_jsx.push(item)
-						})
-				}
-			}).then(() => {
-				console.log(arr_jsx)
-				console.log(translations)
-				setTranslations([...arr_jsx.reverse()])
-			})
-
-	}
-
-
-	function Piece1(text, translation, id_string) {
-		return (
-			<>
-				<Container fluid style={{ margin: "0px", padding: "7px", minHeight: "100px" }} className="py-2 d-flex justify-content-between">
-					<Col md="auto" className="d-flex align-items-center" style={{ marginRight: "10px", marginTop: "20px" }}>
-						<Form className="d-flex align-items-center">
-							<Form.Group className="mb-3" controlId="formBasicCheckbox">
-								<Form.Check type="checkbox" />
-							</Form.Group>
-						</Form>
-					</Col>
-					<Col style={{ marginRight: "10px" }} onClick={async (e) => {
-						Get_string(id_string)
-					}
-					}>
-						<Form.Control className="d-flex align-items-start"
-							readOnly
-							as="textarea"
-							style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
-						>
-							{text}
-						</Form.Control>
-					</Col>
-					<Col>
-						<Form.Control className="d-flex align-items-start"
-							readOnly
-							as="textarea"
-							style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
-						>
-							{translation}
-						</Form.Control>
-					</Col>
-				</Container>
-				<hr style={{ padding: "0px", margin: "0px" }} />
-			</>
-		)
-	}
-
-	async function Get_strings() {
-		var arr_jsx = []
-		await fetch("/api/projects/" + link["project_id"] + "/sections/" + link["section_id"] + "/strings")
-			.then(response => response.json())
-			.then(async data_sections => {
-				var count = 0
-				setSections([])
-				for (const elem of data_sections) {
-					count++
-					await fetch("/api/projects/" + link["project_id"] + "/sections/" + link["section_id"] + "/strings/" + elem.id + "/translations")
-						.then(response => response.json())
-						.then(translations => {
-							let item
-							if (translations.length === 0) {
-								item = Piece1(elem.text, "А где", elem.id)
-
-							} else {
-								item = Piece1(elem.text, translations.reverse()[0].text, elem.id)
-							}
-							arr_jsx.push(item)
-						})
-				}
-			})
-			.then(() => {
-				setSections(arr_jsx)
-			}
-			)
-	}
 	useEffect(() => {
-		Get_strings()
+        GetProject();
+    }, []);
+
+	async function GetStrings() {
+		let rsp = await fetch(`/api/projects/${link["project_id"]}/sections/${link["section_id"]}/strings?fetch_translations=1`)
+		if (!rsp.ok) {
+			console.log("Грустное")
+			return
+		}
+		try {
+			rsp = await rsp.json()
+		} catch (err) {
+			console.log("Очень грустное")
+			return
+		}
+		console.log(rsp)
+
+		for (let i = 0; i < rsp.length; i++) {
+			rsp[i].translations.sort((a, b) => (new Date(b.updated_at) - new Date(a.updated_at)))
+		}
+
+		setStrings(rsp)
+	}
+
+	useEffect(() => {
+		GetStrings()
 	}, [])
 
-	async function Add_translation() {
-		console.log(idStr, inputTranslation)
-		await fetch("/api/projects/" + link["project_id"] + "/sections/" + link["section_id"] + "/strings/" + idStr + "/translations",
+	async function AddTranslation() {
+		const ind = curStringIndex
+		console.log(curString)
+		let rsp = await fetch(`/api/projects/${link["project_id"]}/sections/${link["section_id"]}/strings/${curString.id}/translations`,
 			{
 				method: "POST",
 				body: JSON.stringify({
@@ -248,18 +130,22 @@ export default function Editor() {
 					'Content-Type': 'application/json; charset=UTF-8',
 				},
 				credentials: "include",
-			}).then(response => {
-				if (!response.ok) {
-					console.log("zaebeatles")
-				}
-				else return response.json()
-			}).then(async data => {
-				console.log(data)
-				Get_strings()
-				Get_string(idStr)
-
-
 			})
+		if (!rsp.ok) {
+			console.log("=(")
+			return
+		}
+		try {
+			rsp = await rsp.json()
+			let rsp2 = await fetch(`/api/projects/${link["project_id"]}/sections/${link["section_id"]}/strings/${curString.id}?fetch_translations=1`)
+			rsp2 = await rsp2.json()
+			strings[curStringIndex] = rsp2
+			setStrings(strings)
+			setCurString(strings[curStringIndex])
+		} catch (err) {
+			console.log("=( =(")
+			console.log(err)
+		}
 	}
 
 
@@ -340,12 +226,43 @@ export default function Editor() {
 			<Container fluid style={{ marginTop: "110px" }}>
 				<Row>
 					<Col className="border-bottom" style={{ padding: "0px" }}>
-						{sections}
+						{strings.map((str, i) => {
+							return <>
+								<Container fluid style={{ margin: "0px", padding: "7px", minHeight: "100px" }} className="py-2 d-flex justify-content-between" key={str.id}>
+									<Col md="auto" className="d-flex align-items-center" style={{ marginRight: "10px", marginTop: "20px" }}>
+										<Form className="d-flex align-items-center">
+											<Form.Group className="mb-3" controlId="formBasicCheckbox">
+												<Form.Check type="checkbox" />
+											</Form.Group>
+										</Form>
+									</Col>
+									<Col style={{ marginRight: "10px" }} onClick={ async (e) => SelectString(i) }>
+										<Form.Control className="d-flex align-items-start"
+											readOnly
+											as="textarea"
+											style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+											value={str.text}
+										>	
+										</Form.Control>
+									</Col>
+									<Col>
+										<Form.Control className="d-flex align-items-start"
+											readOnly
+											as="textarea"
+											style={{ paddingTop: "5px", paddingLeft: "10px", height: "100%", wordWrap: "break-word" }}
+											value={str.translations?.[0]?.text || ""}
+										>	
+										</Form.Control>
+									</Col>
+								<hr style={{ padding: "0px", margin: "0px" }} />
+								</Container>
+							</>
+						})}
 
 
 					</Col>
 					<Col className="border-start border-end border-bottom" md={4}>
-						<Button variant="outline-success" style={{ margin: "10px 0px 10px 0px" }} onClick={() => Add_translation()}><FaPlus style={{ marginBottom: "3px", marginRight: "3px" }} />  Добавить перевод </Button>
+						<Button variant="outline-success" style={{ margin: "10px 0px 10px 0px" }} onClick={() => AddTranslation()}><FaPlus style={{ marginBottom: "3px", marginRight: "3px" }} />  Добавить перевод </Button>
 						<Form.Control className="d-flex align-items-start"
 							onChange={translationChange}
 							as="textarea"
@@ -355,10 +272,19 @@ export default function Editor() {
 						</Form.Control>
 
 						<h3>Варианты перевода</h3>
-						{translations}
-
-
-
+						{curString?.translations?.map((tr, i) =>
+						<>
+							<FloatingLabel controlId="translationVariant" label={members.find((el) => el.user.id == tr.author_id)?.user?.username || "noname"} key={tr.id}>
+								<Form.Control
+									as="textarea"
+									readOnly
+									style={{ marginTop: "10px", minHeight: "100px", wordWrap: "break-word" }}
+									value={tr.text}
+								>
+								</Form.Control>
+							</FloatingLabel>
+						</>
+						)}
 					</Col>
 				</Row>
 			</Container>
